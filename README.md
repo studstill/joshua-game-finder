@@ -16,7 +16,8 @@ your local coffee house or neighborhood bar), bring the game your want to play, 
 this app to invite people to join you!  It's that easy!
 
 When the enough people have indicated that they would like to play, then the
-game is listed as "full", and when everyone arrives, the fun begins!
+game is listed as "full".  When everyone arrives, the game begins and the listing is either 
+marked as "in progress," or is removed from the list of available games.
 
 ##Primary Features:
 
@@ -25,10 +26,12 @@ games that are looking for players.
 
 Each listing will include:
 
-- Which game (or games) will be played
+- What game (or games) will be played
 - Number of players required and/or desired
-( Including how seats are left open and unclaimed)
+(Including how many seats are left open and unclaimed)
 - Estimated play time
 - Location
+- Host's Name
+- Names of participants
 
 
