@@ -25,8 +25,9 @@ games that are looking for players.
 
 Each listing will include:
 
+- Which game (or games) will be played
 - Number of players required and/or desired
--- Including how seats are left open and unclaimed
+( Including how seats are left open and unclaimed)
 - Estimated play time
 - Location
 
