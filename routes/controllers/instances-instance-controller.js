@@ -1,11 +1,10 @@
-//completed for now 7/27/15;
 var mongoose = require('mongoose');
-var User = require(__dirname + '/../../models/User.js');
+var Instance = require(__dirname + '/../../models/Instance.js');
 
 module.exports = {
 
   get: function(req, res) {
-    User.find({username: req.params.user}, function(err, data) {
+    Instance.find({username: req.params.user}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
@@ -15,7 +14,7 @@ module.exports = {
   },
 
   delete: function(req, res) {
-    User.remove({username: req.params.user}, function(err) {
+    Instance.remove({username: req.params.user}, function(err) {
       if (err) {
         res.send(err);
       } else {
