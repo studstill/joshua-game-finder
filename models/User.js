@@ -6,7 +6,7 @@ var userSchema = Schema({
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
     match: /^[a-z0-9]+$/,
     required: 'username is required, only lowercase letters and numbers allowed'
   },
@@ -36,7 +36,7 @@ function validator(v) {
 
 userSchema.path('email').validate(function(email) {
    var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-   return emailRegex.test(email.text); // Assuming email has a text attribute
+   return emailRegex.test(email); // Assuming email has a text attribute
   }, 'The e-mail field cannot be empty.');
 
 module.exports = mongoose.model('User', userSchema);
