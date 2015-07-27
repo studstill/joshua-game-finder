@@ -25,9 +25,14 @@
   },
   "homepage": "https://github.com/studstill/joshua-game-finder#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
-    "mongoose": "^4.1.0"
+    "express-session": "^1.11.3",
+    "jsonwebtoken": "^5.0.4",
+    "mongoose": "^4.1.0",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.2.0",
