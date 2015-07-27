@@ -1,11 +1,10 @@
-//completed for now 7/27/15;
 var mongoose = require('mongoose');
-var User = require(__dirname + '/../../models/User.js');
+var Instance = require(__dirname + '/../../models/Instance.js');
 
 module.exports = {
 
   get: function(req, res) {
-    User.find({}, function(err, data) {
+    Instance.find({}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
@@ -15,8 +14,8 @@ module.exports = {
   },
 
   post: function(req, res) {
-    var user = new User(req.body);
-    user.save(function(err, data) {
+    var instance = new Instance(req.body);
+    instance.save(function(err, data) {
       if (err) {
         res.send(err);
       } else {

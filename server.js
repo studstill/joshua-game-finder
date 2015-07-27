@@ -8,6 +8,7 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
 var apiRouter = express.Router();
 
 require('./routes/users-routes')(apiRouter);
+require('./routes/instance-routes')(apiRouter);
 
 app.use('/api', apiRouter);
 

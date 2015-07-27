@@ -7,11 +7,11 @@ module.exports = function(router) {
   router.use(bodyParser.json());
 
   router.route('/users')
-    .get(usersController.get(req, res))
-    .post(usersController.post(req, res))
+    .get(usersController.get)
+    .post(usersController.post)
 
   router.route('/users/:user')
-    .get(usersUserController.get(req, res))
-    .delete(usersUserController.delete(req, res))
+    .get(usersUserController.get)
+    .delete(usersUserController.delete)
 
 }
