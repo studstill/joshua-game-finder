@@ -41,7 +41,7 @@ Each listing will include:
 
 GET- responds with array of all users
 
-POST- Adds a user
+POST- Adds a user returns the token for the new user
 
 ######/api/users/:username
 
