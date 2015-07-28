@@ -47,8 +47,8 @@
 	__webpack_require__(1);
 	__webpack_require__(5);
 	__webpack_require__(6);
-	__webpack_require__(7);
-	module.exports = __webpack_require__(8);
+	__webpack_require__(8);
+	module.exports = __webpack_require__(7);
 
 
 /***/ },
@@ -69,25 +69,24 @@
 	__webpack_require__(6)(gameApp);
 
 	//directives
-	//require('./settings/directives/newSettingDirective.js')(settingsApp);
+	__webpack_require__(7)(gameApp);
 
 	//routeProvider
 	//require(....)(app);
 
 
 	//New file
-	// module.exports = function(app) {
-	// 	app.config(['$routeProvider', function($routeProvider) {
-	// 		$routeProvider
-	// 		.when('/shit', {
-	// 			templateUrl: '/templates/settings/directives/new_settings_template.html',
-	// 			controller: 'settingsController'
-	// 		})
-	// 		.otherwise({
-	// 			redirectTo: '/'
-	// 		});
-	// 	}]);
-	// }
+
+		gameApp.config(['$routeProvider', function($routeProvider) {
+			$routeProvider
+			.when('/addInstance', {
+				templateUrl: './templates/settings/directives/new_instance_template.html',
+				controller: 'instancesController'
+			})
+			.otherwise({
+				redirectTo: '/'
+			});
+		}]);
 
 
 /***/ },
@@ -29540,7 +29539,7 @@
 
 	    $scope.submitForm = function(instance) {
 	      console.log(instance);
-	      $http.post('/api/instances', instance).success(function(response) {
+	      $http.post('/api/instances:instanceID', instance).success(function(response) {
 	        getAll();
 	      });
 	    };
@@ -29619,6 +29618,23 @@
 
 	'use strict';
 
+	module.exports = function(app){
+		app.directive('newInstanceDirective', function(){
+			return {
+				restrict: 'AC',
+				templateUrl: './app/templates/settings/directives/new_instance_template.html',
+				replace: true
+			}
+		});
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
 	module.exports = function(app) {
 		app.controller('usersController', ['$scope', 'resource', function($scope, resource) {
 
@@ -29650,23 +29666,6 @@
 				console.log(user);
 			};
 		}]);
-	};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app){
-		app.directive('newInstanceDirective', function(){
-			return {
-				restrict: 'AC',
-				templateUrl: 'app/templates/settings/directives/new_instance_template.html',
-				replace: true
-			}
-		});
 	};
 
 

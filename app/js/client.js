@@ -12,22 +12,21 @@ require('./services/resourceServices.js')(gameApp);
 require('./settings/controllers/instancesController.js')(gameApp);
 
 //directives
-//require('./settings/directives/newSettingDirective.js')(settingsApp);
+require('./settings/directives/newInstanceDirective.js')(gameApp);
 
 //routeProvider
 //require(....)(app);
 
 
 //New file
-// module.exports = function(app) {
-// 	app.config(['$routeProvider', function($routeProvider) {
-// 		$routeProvider
-// 		.when('/shit', {
-// 			templateUrl: '/templates/settings/directives/new_settings_template.html',
-// 			controller: 'settingsController'
-// 		})
-// 		.otherwise({
-// 			redirectTo: '/'
-// 		});
-// 	}]);
-// }
+
+	gameApp.config(['$routeProvider', function($routeProvider) {
+		$routeProvider
+		.when('/addInstance', {
+			templateUrl: './templates/settings/directives/new_instance_template.html',
+			controller: 'instancesController'
+		})
+		.otherwise({
+			redirectTo: '/'
+		});
+	}]);

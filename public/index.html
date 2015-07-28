@@ -25,14 +25,14 @@
       </ul>
     </nav>
   </header>
-  <main  data-ng-init="getInstances()">
+  <main  data-ng-init="getInstances()" data-ng-controller="instancesController">
 
     <!-- assuming Angular's template injection will work
     here's where we'll do that: -->
-    <a href="#/addInstance"></a>
+    <a href="#/addInstance">New Game</a>
     <div data-ng-view></div>
 
-    <ul  data-ng-controller="instancesController">
+    <ul  >
       <!-- existing games -->
       <li data-ng-repeat="instance in instances">
         <h3>{{ instance.game }}</h3>
