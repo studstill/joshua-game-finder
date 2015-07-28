@@ -2,7 +2,20 @@
 
 var gulp = require('gulp');
 var webpack = require('gulp-webpack');
+var sass = require('gulp-sass');
 
+gulp.task('sass', function() {
+  gulp.src('./app/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(minifyCss({
+      compatibility: 'ie8'
+    }))
+    .pipe(gulp.dest('./public/css'));
+});
+
+gulp.task('sass:watch', function() {
+  gulp.watch('./app/sass/**/*.scss', ['sass']);
+});
 
 gulp.task('webpackdev', function() {
   return gulp.src('./app/js/**/*.js')
@@ -13,16 +26,20 @@ gulp.task('webpackdev', function() {
     }))
     .pipe(gulp.dest('./public/js/'));
 });
+gulp.task('webpackdev:watch', function() {
+  gulp.watch('./app/js/**/*.js', ['webpackdev']);
+});
 
 gulp.task('copy', function() {
   var opts = {
     conditionals: true,
     spare: true
   };
-
   return gulp.src('./app/**/*.html')
     .pipe(gulp.dest('./public/'));
 });
-
-gulp.task('build', ['copy', 'webpackdev']);
+gulp.task("copy:watch", function() {
+  gulp.watch("./app/**/*.html", ["copy"]);
+});
+gulp.task('build', ['copy', 'webpackdev', 'copy:watch', 'webpackdev:watch']);
 gulp.task('default', ['build']);
