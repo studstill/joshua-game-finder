@@ -5,11 +5,11 @@ var User = require(__dirname + '/../../models/User.js');
 module.exports = {
 
   get: function(req, res) {
-    User.find({username: req.params.user}, function(err, data) {
+    User.findOne({username: req.params.user}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
-        res.send(data);
+        res.json(data);
       }
     });
   },
