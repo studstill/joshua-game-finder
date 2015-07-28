@@ -21,7 +21,8 @@ module.exports = {
       if (err) {
         res.send(err);
       } else {
-        res.json(data);
+        var token = jwt.sign(user, 'joshua', {expiresInMinutes: 30});
+        res.json({success: true, msg: 'Authentication successfull', token: token});
       }
     });
   }
