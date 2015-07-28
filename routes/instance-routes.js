@@ -13,5 +13,6 @@ module.exports = function(router) {
 
   router.get('/instances/:instance', instancesInstanceController.get)
   router.delete('/instances/:instance', verify, instancesInstanceController.delete)
+  router.put('/instances/:instance', verify, instancesInstanceController.put)
 
 }

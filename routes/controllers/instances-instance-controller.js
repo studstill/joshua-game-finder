@@ -4,7 +4,7 @@ var Instance = require(__dirname + '/../../models/Instance.js');
 module.exports = {
 
   get: function(req, res) {
-    Instance.find({_id: req.params.instance}, function(err, data) {
+    Instance.findOne({_id: req.params.instance}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
@@ -19,6 +19,34 @@ module.exports = {
         res.send(err);
       } else {
         res.json({msg: 'deleted: ' + req.params.instance});
+      }
+    });
+  },
+
+  put: function(req, res) {
+    Instance.findOne({_id: req.params.instance}, function(err, instance) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log(instance);
+        if(req.decoded._id != instance.creator) {
+          res.status(403).json({msg: 'User does not have access to this file'});
+        } else {
+          Instance.update(instance, req.body, function(err, numAff) {
+            if (err) {
+              res.send(err);
+            } else {
+              Instance.findOne({_id: req.params.instance}, function(err, instance) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  console.log(instance);
+                  res.send(instance);
+                }
+              });
+            }
+          });
+        }
       }
     });
   }
