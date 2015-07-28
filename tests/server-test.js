@@ -93,7 +93,7 @@ describe('Users REST API', function() {
 
   it('should respond to GET /users/:user that user\'s info', function(done) {
     chai.request('localhost:3000')
-      .get('/api/users/sirtestsalot')
+      .get('/api/users/phil')
       .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
@@ -102,6 +102,19 @@ describe('Users REST API', function() {
         done();
       });
   });
+
+  it('should respond to a PUT /users/:user by updating that user', function(done) {
+    chai.request('localhost:3000')
+      .put('/api/users/phil')
+      .set('x-access-token', token)
+      .send({email: 'my_new_email@email.com'})
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res).to.be.json;
+        done();
+      })
+  })
 
   it('should respond to a DELETE /users/:user by deleting that user', function(done) {
     chai.request('localhost:3000')
