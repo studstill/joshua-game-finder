@@ -4,7 +4,7 @@ var Instance = require(__dirname + '/../../models/Instance.js');
 module.exports = {
 
   get: function(req, res) {
-    Instance.find({username: req.params.user}, function(err, data) {
+    Instance.find({_id: req.params.instance}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
@@ -14,11 +14,11 @@ module.exports = {
   },
 
   delete: function(req, res) {
-    Instance.remove({username: req.params.user}, function(err) {
+    Instance.remove({_id: req.params.instance}, function(err) {
       if (err) {
         res.send(err);
       } else {
-        res.json({msg: 'deleted: ' + req.params.user});
+        res.json({msg: 'deleted: ' + req.params.instance});
       }
     });
   }
