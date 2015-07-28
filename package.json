@@ -32,7 +32,8 @@
     "jsonwebtoken": "^5.0.4",
     "mongoose": "^4.1.0",
     "passport": "^0.2.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "angular": "^1.4.3"
   },
   "devDependencies": {
     "chai": "^3.2.0",
@@ -41,6 +42,7 @@
     "gulp-jshint": "^1.11.2",
     "gulp-mocha": "^2.1.3",
     "jshint-stylish": "^2.0.1",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "webpack": "^1.10.5"
   }
 }
