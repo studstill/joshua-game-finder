@@ -16,6 +16,7 @@ module.exports = {
 
   post: function(req, res) {
     var user = new User(req.body);
+    user.password = user.createHash(user.password);
     user.save(function(err, data) {
       if (err) {
         res.send(err);
@@ -24,5 +25,4 @@ module.exports = {
       }
     });
   }
-
 };

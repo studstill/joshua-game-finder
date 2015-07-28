@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = Schema({
   username: {
@@ -13,12 +14,6 @@ var userSchema = Schema({
   password: {
     type: String,
     required: true,
-    trim: true,
-    match: /[^ ]/,
-    validate: [
-      validator,
-      'Password must be between 8 and 16 characters.'
-    ]
   },
   email: {
     type: String,
@@ -30,8 +25,12 @@ var userSchema = Schema({
   state: String
 });
 
-function validator(v) {
-  return 8 < v.length < 16;
+userSchema.methods.createHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
+
+userSchema.methods.verifyPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
 }
 
 userSchema.path('email').validate(function(email) {
