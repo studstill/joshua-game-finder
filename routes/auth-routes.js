@@ -14,7 +14,7 @@ module.exports = function(router) {
         } else {
           if (!user) {
             res.json({success: false, msg: 'Invalid username'});
-          } else if (user.password !== req.body.password) {
+          } else if (!user.verifyPassword(req.body.password)) {
             res.json({success: false, msg: 'Invalid password'});
           } else {
             var token = jwt.sign(user, process.env.secret, {expiresInMinutes: 30});
