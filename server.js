@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var morgan = require('morgan');
 var port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
@@ -13,7 +14,6 @@ require('./routes/instance-routes')(apiRouter);
 
 require('./routes/auth-routes')(authRouter);
 
-app.use('/api', require('./routes/verify'));
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
 

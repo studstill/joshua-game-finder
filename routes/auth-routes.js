@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
 module.exports = function(router) {
 
