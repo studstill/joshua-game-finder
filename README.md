@@ -49,6 +49,8 @@ GET- responds with a specific user
 
 DELETE- Deletes a specific user
 
+PUT-When passed a JSON updates the contained fields in DB and responds with an updated user
+
 ######/api/instances
 
 GET- Gets an array of instances
@@ -60,6 +62,8 @@ POST- Adds an instance
 GET- responds with a specific instance
 
 DELETE- Deletes a specific instance
+
+PUT- When passed a JSON updates the contained fields in DB and responds with an updated instance
 
 ######/auth/login
 
