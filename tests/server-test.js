@@ -7,11 +7,11 @@ var server           = require(__dirname + '/../server');
 var chaiHttp         = require('chai-http');
 var mongoose         = require('mongoose');
 var expect           = chai.expect;
-process.env.MONGOURI = 'mongodb://localhost/game_test';
+process.env.MONGO_URI = 'mongodb://localhost/game_test';
 chai.use(chaiHttp);
 
-var testUser = {
-  username: 'sirtestsalot',
+var testy = {
+  username: 'phil',
   password: 'password123',
   email: 'sirtestsalot@email.com',
   firstName: 'Sirtests',
@@ -30,6 +30,8 @@ var testInstance = {
   playTime: '2hrs',
   gameOver: false
 };
+
+var token = '';
 
 describe('Users REST API', function() {
 
@@ -51,9 +53,10 @@ describe('Users REST API', function() {
       done();
   });
 
-  it('should respond to GET /users by returning list of all users', function(done) {
+  it('should respond to POST /users by storing and returning a user', function(done) {
     chai.request('localhost:3000')
-      .get('/api/users')
+      .post('/api/users')
+      .send(testy)
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -62,10 +65,23 @@ describe('Users REST API', function() {
       });
   });
 
-  it('should respond to POST /users by storing and returning a user', function(done) {
+  it('Should respond to a POST /login by issuing a token', function(done) {
     chai.request('localhost:3000')
-      .post('/api/users')
-      .send(testUser)
+      .post('/auth/login')
+      .send({username: 'phil', password: 'password123'})
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res).to.be.json;
+        token = res.body.token;
+        done();
+      })
+  })
+
+  it('should respond to GET /users by returning list of all users', function(done) {
+    chai.request('localhost:3000')
+      .get('/api/users')
+      .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -73,10 +89,12 @@ describe('Users REST API', function() {
         done();
       });
   });
+
 
   it('should respond to GET /users/:user that user\'s info', function(done) {
     chai.request('localhost:3000')
       .get('/api/users/sirtestsalot')
+      .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -88,18 +106,13 @@ describe('Users REST API', function() {
   it('should respond to a DELETE /users/:user by deleting that user', function(done) {
     chai.request('localhost:3000')
       .del('/api/users/sirtestsalot')
+      .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
         done();
       });
-  });
-
-  after(function(done) {
-    mongoose.connection.db.dropDatabase(function() {
-      done();
-    });
   });
 
 });
@@ -140,7 +153,8 @@ describe('Instances REST API', function() {
   it('should respond to POST /instances by storing and returning a instance', function(done) {
     chai.request('localhost:3000')
       .post('/api/instances')
-      .send(testUser)
+      .set('x-access-token', token)
+      .send(testInstance)
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -163,6 +177,7 @@ describe('Instances REST API', function() {
   it('should respond to a DELETE /instances/:instance by deleting that instance', function(done) {
     chai.request('localhost:3000')
       .del('/api/instances/testId')
+      .set('x-access-token', token)
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
