@@ -2,13 +2,6 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var port = process.env.PORT || 3000;
-var passport = require('passport');
-var expressSession = require('express-session');
-
-app.use(expressSession({secret: 'joshua'}));
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
 
