@@ -43,7 +43,7 @@ GET- responds with array of all users
 
 POST- Adds a user
 
-######/api/users/:user
+######/api/users/:username
 
 GET- responds with a specific user
 
@@ -55,7 +55,7 @@ GET- Gets an array of instances
 
 POST- Adds an instance
 
-######/api/instances/:instance
+######/api/instances/:instanceID
 
 GET- responds with a specific instance
 
