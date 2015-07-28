@@ -15,6 +15,7 @@ module.exports = {
 
   post: function(req, res) {
     var instance = new Instance(req.body);
+    instance.creator = req.decoded._id;
     instance.save(function(err, data) {
       if (err) {
         res.send(err);
