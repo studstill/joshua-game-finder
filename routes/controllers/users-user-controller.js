@@ -7,9 +7,9 @@ module.exports = {
   get: function(req, res) {
     User.findOne({username: req.params.user}, function(err, data) {
       if (err) {
-        res.send(err);
+        res.status(500).json({success: false, msg: 'Error finding user', error: err});
       } else {
-        res.json(data);
+        res.json({success: true, msg: 'Get user successful', data: data});
       }
     });
   },
@@ -18,24 +18,18 @@ module.exports = {
     var currentUsername = req.params.user;
     User.findOne({username: currentUsername}, function(err, user) {
       if (currentUsername != req.decoded.username) {
-        res.status(403).json({msg: 'Not allowed'});
+        res.status(403).json(({success: false, msg: 'User requesting did not match user requested', error: err}));
       } else {
          if (err) {
-          res.status(500).json({msg: 'Server error: ' + err});
+          res.status(500).json(({success: false, msg: 'Error finding user', error: err}));
         } else {
-          User.update(user, req.body, function(err, nummAffected) {
+          User.update(user, req.body, {new: true}, function(err, updatedUser) {
             if (err) {
-              res.status(500).json({msg: 'Server error: ' + err})
+              res.status(500).json(({success: false, msg: 'Error updating user', error: err}));
             } else {
-              User.findOne({username: currentUsername}, function(err, user) {
-                if (err) {
-                  res.status(500).json({msg: 'Server error: ' + err})
-                } else {
-                  res.json({msg: 'Updated: ' + user});
-                }
-              })
+              res.json({success: true, msg: 'User info updated successfully', data: updatedUser});
             }
-          })
+          });
         }
       }
     });
@@ -44,9 +38,9 @@ module.exports = {
   delete: function(req, res) {
     User.remove({username: req.params.user}, function(err) {
       if (err) {
-        res.send(err);
+        res.status(500).json(({success: false, msg: 'Error deleting user', error: err}));
       } else {
-        res.json({msg: 'deleted: ' + req.params.user});
+        res.json({success: true, msg: 'User deleted successfully'});
       }
     });
   }
