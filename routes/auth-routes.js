@@ -1,6 +1,8 @@
 var User = require('../models/User');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
+var config = require('../config')
+
 
 module.exports = function(router) {
 
@@ -18,7 +20,7 @@ module.exports = function(router) {
         } else if (!user.verifyPassword(req.body.password)) {
           res.json({success: false, msg: 'Invalid password'});
         } else {
-          var token = jwt.sign(user, 'joshua', {expiresInMinutes: 30});
+          var token = jwt.sign(user, config.secret, {expiresInMinutes: 30});
           res.json({success: true, msg: 'Authentication successfull', token: token});
         }
       }
