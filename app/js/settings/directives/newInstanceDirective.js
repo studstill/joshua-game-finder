@@ -8,4 +8,8 @@ module.exports = function(app){
 			replace: true
 		}
 	});
+	// angular.module("orderByDate", [])
+	// .controller("instancesController", ["$scope"], function(scope){
+	// 	$scope.instances;
+	// });
 };

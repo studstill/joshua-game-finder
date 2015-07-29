@@ -1,4 +1,4 @@
-<form data-ng-submit="submitForm(instance)">
+<form data-ng-controller="instancesController" data-ng-submit="submitForm(instance)">
 	<label for="name">Host</label>
 	<input id="name" type="text" data-ng-model="instance.host">
 	<label for="game">Game</label>
@@ -11,5 +11,5 @@
 	<input id="time" type="string" data-ng-model="instance.startTime">
 	<label for="duration">Duration</label>
 	<input id="duration" type="string" data-ng-model="instance.playTime">
-	<button type="submit">Submit</button>
+	<button type="submit(:instanceID)">Submit</button>
 </form>

@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var port = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
-
+mongoose.connect('mongodb://lookingforgame:joshuaapp@ds033499.mongolab.com:33499/looking_for_game' || 'mongodb://localhost/game_test');
+//process.env.MONGOLAB_URI
 var apiRouter = express.Router();
 var authRouter = express.Router();
 

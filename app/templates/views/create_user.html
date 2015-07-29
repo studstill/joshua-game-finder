@@ -1,0 +1,21 @@
+<section data-ng-controller="authController">
+  <form data-ng-submit="authSubmit(user)">
+    <label for="username">Username</label>
+    <input type="text" name="username" data-ng-model="user.username">
+    <label for="password">Password</label>
+    <input type="password" name="password" data-ng-model="user.password">
+    <label for="password_confirmation">Confirmation</label>
+    <input type="password" name="password_confirmation" data-ng-model="user.password_confirmation">
+    <label for="eMail">eMail</label>
+    <input type="text" name="eMail" data-ng-model="user.eMail">
+    <label for="firstName">First Name</label>
+    <input type="text" name="firstName" data-ng-model="user.firstName">
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" data-ng-model="user.lastName">
+    <label for="city">City</label>
+    <input type="text" name="city" data-ng-model="user.city">
+    <label for="state">State</label>
+    <input type="text" name="state" data-ng-model="user.state">
+    <button type="submit">Sign up</button>
+  </form>
+</section>
