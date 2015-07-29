@@ -2,12 +2,13 @@ var usersController = require('./controllers/users-controller');
 var usersUserController = require('./controllers/users-user-controller');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
+var verify = require('./middleware/verify');
 
 module.exports = function(router) {
 
   router.use(bodyParser.json());
 
-  router.get('/users', usersController.get);
+  router.get('/users', verify, usersController.get);
   // "Sign-up" route:
   router.post('/users', usersController.post);
 

@@ -178,7 +178,7 @@ describe('Instances REST API', function() {
   it('should respond to POST /instances by storing and returning a instance', function(done) {
     chai.request('localhost:3000')
       .post('/api/instances')
-      .set('x-access-token', token)
+      // .set('x-access-token', token)
       .send(testInstance2)
       .end(function(err, res) {
         expect(err).to.eql(null);
