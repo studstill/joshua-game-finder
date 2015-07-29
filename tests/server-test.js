@@ -7,7 +7,7 @@ var server           = require(__dirname + '/../server');
 var chaiHttp         = require('chai-http');
 var mongoose         = require('mongoose');
 var expect           = chai.expect;
-process.env.MONGO_URI = 'mongodb://localhost/game_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost/game_test2';
 chai.use(chaiHttp);
 
 var testy = {
@@ -93,7 +93,7 @@ describe('Users REST API', function() {
 
   it('should respond to GET /users/:user that user\'s info', function(done) {
     chai.request('localhost:3000')
-      .get('/api/users/sirtestsalot')
+      .get('/api/users/phil')
       .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
@@ -102,6 +102,19 @@ describe('Users REST API', function() {
         done();
       });
   });
+
+  it('should respond to a PUT /users/:user by updating that user', function(done) {
+    chai.request('localhost:3000')
+      .put('/api/users/phil')
+      .set('x-access-token', token)
+      .send({email: 'my_new_email@email.com'})
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res).to.be.json;
+        done();
+      })
+  })
 
   it('should respond to a DELETE /users/:user by deleting that user', function(done) {
     chai.request('localhost:3000')
@@ -119,6 +132,18 @@ describe('Users REST API', function() {
 
 describe('Instances REST API', function() {
   testId = '';
+  testId2 = '';
+  testInstance2 = new Instance({
+      host: 'Phil',
+      game: 'somethingelse',
+      location: 'Here',
+      playersNeeded: '3',
+      signedUp: '0',
+      startTime: '14:00',
+      playTime: '2hrs',
+      gameOver: false
+    });
+
   before(function(done) {
     testInstance = new Instance({
       host: 'Tester',
@@ -154,7 +179,19 @@ describe('Instances REST API', function() {
     chai.request('localhost:3000')
       .post('/api/instances')
       .set('x-access-token', token)
-      .send(testInstance)
+      .send(testInstance2)
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res).to.be.json;
+        testId2 = res.body._id;
+        done();
+      });
+  });
+
+  it('should respond to GET /instances/:instance that instance\'s info', function(done) {
+    chai.request('localhost:3000')
+      .get('/api/instances/' + testId)
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -163,9 +200,11 @@ describe('Instances REST API', function() {
       });
   });
 
-  it('should respond to GET /instances/:instance that instance\'s info', function(done) {
+  it('should respond to PUT /instances by storing and returning a instance', function(done) {
     chai.request('localhost:3000')
-      .get('/api/instances/testId')
+      .put('/api/instances/' + testId2)
+      .set('x-access-token', token)
+      .send({game: "changed", startTime: "11:00"})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
@@ -176,7 +215,7 @@ describe('Instances REST API', function() {
 
   it('should respond to a DELETE /instances/:instance by deleting that instance', function(done) {
     chai.request('localhost:3000')
-      .del('/api/instances/testId')
+      .del('/api/instances/' + testId)
       .set('x-access-token', token)
       .end(function(err, res) {
         expect(err).to.eql(null);

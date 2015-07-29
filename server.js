@@ -2,9 +2,10 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var morgan = require('morgan');
+var config = require('./config')
 var port = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
+mongoose.connect(config.database || process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
 
 var apiRouter = express.Router();
 var authRouter = express.Router();
