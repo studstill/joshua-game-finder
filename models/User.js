@@ -22,7 +22,9 @@ var userSchema = Schema({
   firstName: String,
   lastName: String,
   city: String,
-  state: String
+  state: String,
+  hosting: Boolean,
+  isCommitted: Boolean
 });
 
 userSchema.methods.createHash = function(password) {

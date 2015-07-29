@@ -15,6 +15,12 @@ module.exports = {
 
   post: function(req, res) {
     var instance = new Instance(req.body);
+    instance.creator = req.decoded._id;
+    User.findOneAndUpdate({_id: req.decoded._id}, {hosting: true,
+      isCommitted: true}, function(err, numAffected) {
+        if (err) throw err;
+        console.log('Number affected: ' + numAffected);
+    });
     instance.save(function(err, data) {
       if (err) {
         res.send(err);
@@ -22,6 +28,8 @@ module.exports = {
         res.json(data);
       }
     });
+
+
   }
 
 };

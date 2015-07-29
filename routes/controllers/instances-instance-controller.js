@@ -4,7 +4,7 @@ var Instance = require(__dirname + '/../../models/Instance.js');
 module.exports = {
 
   get: function(req, res) {
-    Instance.find({_id: req.params.instance}, function(err, data) {
+    Instance.findOne({_id: req.params.instance}, function(err, data) {
       if (err) {
         res.send(err);
       } else {
@@ -21,6 +21,77 @@ module.exports = {
         res.json({msg: 'deleted: ' + req.params.instance});
       }
     });
+  },
+
+  put: function(req, res) {
+    Instance.findOne({_id: req.params.instance}, function(err, instance) {
+      if (err) {
+        res.status(500).json({msg: 'Server Error: ' + err});
+      } else if (instance.gameOver === true) {
+        res.json({msg: 'Game already marked as over changes not allowed'});
+      } else {
+        if(req.decoded._id != instance.creator) {
+          res.status(403).json({msg: 'User does not have access to this file'});
+        } else {
+          Instance.update(instance, req.body, function(err, numAff) {
+            if (err) {
+              res.status(500).json({msg: 'Server Error: ' + err});
+            } else {
+              Instance.findOne({_id: req.params.instance}, function(err, instance) {
+                if (err) {
+                  res.json({msg: 'Error: ' + err});
+                } else {
+                  if (instance.gameOver = true) {
+                    User.findOneAndUpdate({_id: instance.creator}, {hosting: false, isCommitted: false}, function(err, numAffected) {
+                      if (err) throw err;
+                      console.log('Number affected: ' + numAffected);
+                    });
+                    instance.participants.forEach(function(e) {
+                      User.findOneAndUpdate({_id: e}, {isCommitted:false}, function(err, numAffected) {
+                      if (err) throw err;
+                      console.log('Number affected: ' + numAffected);
+                    });
+                    });
+                  }
+                  res.json(instance);
+                }
+              });
+            }
+          });
+        }
+      }
+    });
+  },
+
+  join: function(req, res) {
+    User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: true},
+      function(err, numAffected) {
+      if (err) throw err;
+      console.log('Number affected: ' + numAffected);
+    });
+    Instance.findOne({_id: req.params.instance}, function(err, instance) {
+      if (err) {
+        res.status(500).json({msg: 'Server Error: ' + err});
+      } else {
+        instance.participants.push(req.decoded._id);
+      }
+    })
+  },
+
+  quit: function(req, res) {
+    User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: false},
+      function(err, numAffected) {
+      if (err) throw err;
+      console.log('Number affected: ' + numAffected);
+    });
+    Instance.findOneAndUpdate({_id: req.params.instance},
+      {$pull: {'participants': req.decoded._id}}, function(err, numAffected) {
+      if (err) {
+        res.status(500).json({msg: 'Server Error: ' + err});
+      } else {
+        res.json({msg: 'Successfully quit',success: true});
+      }
+    })
   }
 
 };

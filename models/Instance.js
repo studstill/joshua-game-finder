@@ -16,7 +16,9 @@ var instanceSchema = Schema({
   gameOver: {
     type: Boolean,
     default: false
-  }
+  },
+  creator: {type: Schema.Types.ObjectId, ref: 'User'},
+  participants: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 module.exports = mongoose.model('Instance', instanceSchema);
