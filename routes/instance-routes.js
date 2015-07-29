@@ -15,4 +15,7 @@ module.exports = function(router) {
   router.delete('/instances/:instance', verify, instancesInstanceController.delete)
   router.put('/instances/:instance', verify, instancesInstanceController.put)
 
+  router.put('/instances/:instance/join', verify, instancesInstanceController.join)
+  router.put('/instances/:instance/quit', verify, instancesInstanceController.quit)
+
 }
