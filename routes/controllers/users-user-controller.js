@@ -17,10 +17,7 @@ module.exports = {
   put: function(req, res) {
     var currentUsername = req.params.user;
     User.findOne({username: currentUsername}, function(err, user) {
-      console.log(currentUsername);
-      console.log(req.decoded.username);
       if (currentUsername != req.decoded.username) {
-        console.log('I\'m HERE NOW!');
         res.status(403).json({msg: 'Not allowed'});
       } else {
          if (err) {
@@ -34,7 +31,6 @@ module.exports = {
                 if (err) {
                   res.status(500).json({msg: 'Server error: ' + err})
                 } else {
-                  console.log(user);
                   res.json({msg: 'Updated: ' + user});
                 }
               })

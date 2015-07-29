@@ -28,7 +28,6 @@ module.exports = {
       if (err) {
         res.send(err);
       } else {
-        console.log(instance);
         if(req.decoded._id != instance.creator) {
           res.status(403).json({msg: 'User does not have access to this file'});
         } else {
@@ -40,7 +39,6 @@ module.exports = {
                 if (err) {
                   res.send(err);
                 } else {
-                  console.log(instance);
                   res.send(instance);
                 }
               });

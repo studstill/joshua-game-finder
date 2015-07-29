@@ -1,6 +1,7 @@
 //completed for now 7/27/15;
 var mongoose = require('mongoose');
 var User = require(__dirname + '/../../models/User.js');
+var jwt = require('jsonwebtoken');
 
 module.exports = {
 
