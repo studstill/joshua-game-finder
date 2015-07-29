@@ -14,9 +14,12 @@ module.exports = function(app) {
 
     $scope.submitForm = function(instance) {
       console.log(instance);
-      $http.post('/api/instances:instanceID', instance).success(function(response) {
-        getAll();
-      });
+      $http.post('/api/instances/', instance).success(function(response) {
+        console.log("post successful");
+        setTimeout(function(){
+          getAll();
+      },2000);
+    });
     };
 
     $scope.destroy = function(id) {
