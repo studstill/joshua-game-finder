@@ -12,6 +12,11 @@ module.exports = function(router) {
   router.post('/instances', instancesController.post)
 
   router.get('/instances/:instance', instancesInstanceController.get)
-  router.delete('/instances/:instance', instancesInstanceController.delete)
+
+  router.delete('/instances/:instance', verify, instancesInstanceController.delete)
+  router.put('/instances/:instance', verify, instancesInstanceController.put)
+
+  router.put('/instances/:instance/join', verify, instancesInstanceController.join)
+  router.put('/instances/:instance/quit', verify, instancesInstanceController.quit)
 
 }

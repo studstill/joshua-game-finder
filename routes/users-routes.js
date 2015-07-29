@@ -11,7 +11,11 @@ module.exports = function(router) {
   // "Sign-up" route:
   router.post('/users', usersController.post);
 
-  router.get('/users/:user', usersUserController.get);
-  router.delete('/users/:user', usersUserController.delete);
+
+  router.get('/users/:user', verify, usersUserController.get);
+  // TODO - verify that user is themselves
+  router.put('/users/:user', verify, usersUserController.put);
+
+  router.delete('/users/:user', verify, usersUserController.delete);
 
 }

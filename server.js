@@ -2,10 +2,12 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var morgan = require('morgan');
+var config = require('./config')
 var port = process.env.PORT || 3000;
 
-mongoose.connect('mongodb://lookingforgame:joshuaapp@ds033499.mongolab.com:33499/looking_for_game' || 'mongodb://localhost/game_test');
-//process.env.MONGOLAB_URI
+
+mongoose.connect(config.database || process.env.MONGOLAB_URI || 'mongodb://localhost/game_test');
+
 var apiRouter = express.Router();
 var authRouter = express.Router();
 
