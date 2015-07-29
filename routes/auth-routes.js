@@ -1,7 +1,7 @@
 var User = require('../models/User');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
-var config = require('../config')
+var config = require('../config');
 
 
 module.exports = function(router) {
@@ -13,7 +13,7 @@ module.exports = function(router) {
     // Find a user
     User.findOne({username: req.body.username}, function(err, user) {
       if (err) {
-        res.status(500).json({msg: 'Server Error'});
+        res.status(500).json({success: false, msg: 'Server Error'});
       } else {
         if (!user) {
           res.json({success: false, msg: 'Invalid username'});
@@ -27,4 +27,4 @@ module.exports = function(router) {
     });
   });
 
-}
+};
