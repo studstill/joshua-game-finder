@@ -7,6 +7,7 @@ var instanceSchema = Schema({
   location: String,
   playersNeeded: Number,
   signedUp: Number,
+  participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
   startTime: String,
   playTime: String,
   date: {
