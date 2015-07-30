@@ -20,6 +20,16 @@ var testy = {
   state: 'WA'
 };
 
+var zesty = {
+  username: 'zesty',
+  password: 'password123',
+  email: 'zesty@email.com',
+  firstName: 'zesty',
+  lastName: 'zesty',
+  city: 'Seattle',
+  state: 'WA'
+};
+
 var testInstance = {
   host: 'Me',
   game: 'Go Fish',
@@ -32,6 +42,7 @@ var testInstance = {
 };
 
 var token = '';
+var token2 = '';
 
 describe('Users REST API', function() {
 
@@ -52,6 +63,10 @@ describe('Users REST API', function() {
     });
       done();
   });
+
+/********************************************************
+/    User Tests
+/********************************************************/
 
   it('should respond to POST /users by storing and returning a user', function(done) {
     chai.request('localhost:3000')
@@ -74,6 +89,20 @@ describe('Users REST API', function() {
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
         token = res.body.token;
+        done();
+      })
+  })
+
+  // Create a second user so he can join an instance
+  it('Should respond to a POST /login by issuing a token', function(done) {
+    chai.request('localhost:3000')
+      .post('/api/users')
+      .send(zesty)
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res).to.be.json;
+        token2 = res.body.token;
         done();
       })
   })
@@ -130,6 +159,11 @@ describe('Users REST API', function() {
 
 });
 
+/********************************************************
+/    Instance Tests
+/********************************************************/
+
+
 describe('Instances REST API', function() {
   testId = '';
   testId2 = '';
@@ -178,13 +212,19 @@ describe('Instances REST API', function() {
   it('should respond to POST /instances by storing and returning a instance', function(done) {
     chai.request('localhost:3000')
       .post('/api/instances')
-      // .set('x-access-token', token)
+      .set('x-access-token', token)
       .send(testInstance2)
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
-        testId2 = res.body._id;
+        testId2 = res.body.data._id;
+
+        User.findOne({username: "phil"}, function(err, data) {
+          if (err) throw err;
+          expect(data.hosting).to.eql(true);
+          expect(data.isCommitted).to.eql(true);
+        });
         done();
       });
   });
@@ -213,6 +253,51 @@ describe('Instances REST API', function() {
       });
   });
 
+  it('should respond to a PUT /instances/:instance/join by adding a user\'s ' +
+      'id to the participants array on the Instance and change the user\'s ' +
+      'field "isCommitted" to true', function(done) {
+      chai.request('localhost:3000')
+        .put('/api/instances/' + testId2 + '/join')
+        .set('x-access-token', token2)
+        .send()
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.status).to.eql(200);
+          expect(res).to.be.json;
+          expect(res.body.data.participants).to.have.length(1);
+          expect(res.body.data.signedUp).to.eql(1);
+          User.findOne({username: "zesty"}, function(err, data) {
+            if (err) throw err;
+            expect(data.hosting).to.eql(false);
+            expect(data.isCommitted).to.eql(true);
+          });
+          done();
+        })
+  })
+
+  it('should respond to a PUT /instances/:instance/quit by removing a user\'s ' +
+      'id from the participants array on the Instance and change the user\'s ' +
+      'field "isCommitted" to false', function(done) {
+      chai.request('localhost:3000')
+        .put('/api/instances/' + testId2 + '/quit')
+        .set('x-access-token', token2)
+        .send()
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.status).to.eql(200);
+          expect(res).to.be.json;
+          expect(res.body.data.participants).to.have.length(0);
+          expect(res.body.data.signedUp).to.eql(0);
+
+          User.findOne({username: "zesty"}, function(err, data) {
+            if (err) throw err;
+            expect(data.hosting).to.eql(false);
+            expect(data.isCommitted).to.eql(true);
+          });
+          done();
+        })
+  })
+
   it('should respond to a DELETE /instances/:instance by deleting that instance', function(done) {
     chai.request('localhost:3000')
       .del('/api/instances/' + testId)
@@ -221,6 +306,7 @@ describe('Instances REST API', function() {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
+        expect(res.body.success).to.eql(true);
         done();
       });
   });
