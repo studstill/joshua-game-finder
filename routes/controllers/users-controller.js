@@ -23,7 +23,7 @@ module.exports = {
       if (err) {
         res.status(500).json({success: false, msg: 'Error saving new user', error: err});
       } else {
-        var token = jwt.sign(user, config.secret, {expiresInMinutes: config.expires});
+        var token = jwt.sign(user, process.env.SECRET, {expiresInMinutes: config.expires});
         res.json({success: true, msg: 'Authentication successful', token: token, data: data});
       }
     });
