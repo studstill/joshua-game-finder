@@ -17,41 +17,9 @@
 <body data-ng-app="gameApp">
   <header class="site-header">
     <h1 class="site-header--title">Looking For Game</h1>
-
-    <!-- this needs to be buttons for either "signup" or "login" when there is not a logged-in user
-    forms need to appear on button click then disappear on submission -->
-    <section data-ng-controller="authController">
-      <form data-ng-submit="authSubmit(user)">
-        <label for="username">Username</label>
-        <input type="text" name="username" data-ng-model="user.username">
-        <label for="password">Password</label>
-        <input type="password" name="password" data-ng-model="user.password">
-        <button type="submit">Sign in</button>
-      </form>
-    </section>
-
-    <section data-ng-controller="authController">
-      <form data-ng-submit="authSubmit(user)">
-        <label for="username">Username</label>
-        <input type="text" name="username" data-ng-model="user.username">
-        <label for="password">Password</label>
-        <input type="password" name="password" data-ng-model="user.password">
-        <!-- <label for="password_confirmation">Password Confirmation</label>
-        <input type="password" name="password_confirmation" data-ng-model="user.password_confirmation"> -->
-        <label for="email">eMail</label>
-        <input type="text" name="email" data-ng-model="user.email">
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" data-ng-model="user.firstName">
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" data-ng-model="user.lastName">
-        <label for="city">City</label>
-        <input type="text" name="city" data-ng-model="user.city">
-        <label for="state">State</label>
-        <input type="text" name="state" data-ng-model="user.state">
-        <button type="submit">Sign up</button>
-      </form>
-    </section>
-
+    <section data-sign-in></section>
+    <section data-create-user></section>
+    <section data-logout></section>
     <nav class="site-nav">
       <ul class="site-nav--list">
         <li>
@@ -60,47 +28,9 @@
       </ul>
     </nav>
   </header>
-  <main data-ng-init="getInstances()" data-ng-controller="instancesController">
-
-    <!-- assuming Angular's template injection will work
-    here's where we'll do that: -->
-    <a href="#/addInstance">New Game</a> | <a href="#/searchForm">Search for Game</a>
-    <div data-ng-view></div>
-
-    <ul>
-      <!-- existing games -->
-      <li data-ng-repeat="instance in instances.slice().reverse()">
-        <h3>{{ instance.host }}'s {{ instance.game }} @ {{ instance.startTime }} at {{ instance.location }}</h3>
-        <ul>
-          <li>
-            Host name: {{ instance.host }}
-          </li>
-          <li>
-            Game: {{ instance.game }}
-          </li>
-          <li>
-            Where: {{ instance.location }}
-          </li>
-          <li>
-            Players Needed: {{ instance.playersNeeded }}
-          </li>
-          <li>
-            Signed Up: {{ instance.signedUp }}
-          </li>
-          <li>
-            Time: {{instance.startTime}}
-          </li>
-          <li>
-            Duration: {{instance.playTime}}
-          </li>
-          <li>
-            <button class="btn-caution" data-ng-click="edit(instance)">Edit</button>
-            <button class="btn-alert" data-ng-click="destroy(instance._id)">Destroy</button>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
+  <main>
+    <section data-new-instance></section>
+    <section data-current-games></section>
   </main>
   <script src="js/bundle.js"></script>
 </body>
