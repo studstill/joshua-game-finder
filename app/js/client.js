@@ -16,6 +16,7 @@ require('./settings/controllers/authController.js')(gameApp);
 
 //directives
 require('./settings/directives/newInstanceDirective.js')(gameApp);
+require('./settings/directives/create_user.js')(gameApp);
 
 //routeProvider
 //require(....)(app);
