@@ -7,6 +7,7 @@ var instanceSchema = Schema({
   location: String,
   playersNeeded: Number,
   signedUp: Number,
+  startDate: Date,
   startTime: String,
   playTime: String,
   date: {
