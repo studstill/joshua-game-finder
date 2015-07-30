@@ -65,7 +65,7 @@ jade
 body-parser
 serve-favicon
 data/
-.env
+//.env
 
 // config.js
 
