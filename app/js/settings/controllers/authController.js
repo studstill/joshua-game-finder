@@ -32,6 +32,7 @@ module.exports = function(app) {
         });
       }
     };
+    $scope.logout = auth.logout;
 
   }]);
 };

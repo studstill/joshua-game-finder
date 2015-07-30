@@ -45,17 +45,18 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(2);
 	__webpack_require__(9);
 	__webpack_require__(8);
-	__webpack_require__(14);
+	__webpack_require__(7);
+	__webpack_require__(17);
 	__webpack_require__(11);
 	__webpack_require__(10);
-	__webpack_require__(15);
+	__webpack_require__(18);
 	__webpack_require__(13);
 	__webpack_require__(16);
-	__webpack_require__(17);
-	module.exports = __webpack_require__(12);
+	__webpack_require__(15);
+	__webpack_require__(12);
+	module.exports = __webpack_require__(14);
 
 
 /***/ },
@@ -64,15 +65,15 @@
 
 	'use strict';
 
+	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(6);
+	__webpack_require__(5);
 	var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies']);
 
 	//services
+	__webpack_require__(7)(gameApp);
 	__webpack_require__(8)(gameApp);
 	__webpack_require__(9)(gameApp);
-	__webpack_require__(2)(gameApp);
 
 	//controllers
 	__webpack_require__(10)(gameApp);
@@ -81,6 +82,9 @@
 	//directives
 	__webpack_require__(12)(gameApp);
 	__webpack_require__(13)(gameApp);
+	__webpack_require__(14)(gameApp);
+	__webpack_require__(15)(gameApp);
+	__webpack_require__(16)(gameApp);
 
 	//routeProvider
 	//require(....)(app);
@@ -106,55 +110,6 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.factory('auth', ['$http', '$cookies', function($http, $cookies) {
-	    return {
-	      signIn: function(user, callback) {
-	        console.log("auth.js at singIn says: ");
-	        console.log(user);
-	        $http.post('/auth/login', user)
-	          .success(function(data) {
-	            $cookies.put('jwt', data.token);
-	            callback(null);
-	          })
-	          .error(function(data) {
-	            callback(data);
-	          });
-	      },
-
-	      create: function(user, callback) {
-	        console.log("auth.js shows:");
-	        console.log(user);
-	        $http.post('/api/users', user)
-	          .success(function(data) {
-	            console.log(data);
-	            $cookies.put('jwt', data.token)
-	            callback(null);
-	          })
-	          .error(function(data) {
-	            callback(data);
-	          });
-	      },
-
-	      logout: function() {
-	        console.log("remove cookies please");
-	        $cookies.remove('jwt');
-	      },
-
-	      isSignedIn: function() {
-	        return !!($cookies.get('jwt') && $cookies.get('jwt').length);
-	      }
-	    };
-	  }]);
-	};
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28523,15 +28478,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(5);
+	__webpack_require__(4);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -29529,15 +29484,15 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	__webpack_require__(6);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -29864,7 +29819,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29919,7 +29874,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29938,6 +29893,55 @@
 
 
 /***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.factory('auth', ['$http', '$cookies', function($http, $cookies) {
+	    return {
+	      signIn: function(user, callback) {
+	        console.log("auth.js at singIn says: ");
+	        console.log(user);
+	        $http.post('/auth/login', user)
+	          .success(function(data) {
+	            $cookies.put('jwt', data.token);
+	            callback(null);
+	          })
+	          .error(function(data) {
+	            callback(data);
+	          });
+	      },
+
+	      create: function(user, callback) {
+	        console.log("auth.js shows:");
+	        console.log(user);
+	        $http.post('/api/users', user)
+	          .success(function(data) {
+	            console.log(data);
+	            $cookies.put('jwt', data.token)
+	            callback(null);
+	          })
+	          .error(function(data) {
+	            callback(data);
+	          });
+	      },
+
+	      logout: function() {
+	        console.log("remove cookies please");
+	        $cookies.remove('jwt');
+	      },
+
+	      isSignedIn: function() {
+	        return !!($cookies.get('jwt') && $cookies.get('jwt').length);
+	      }
+	    };
+	  }]);
+	};
+
+
+/***/ },
 /* 10 */
 /***/ function(module, exports) {
 
@@ -29950,7 +29954,7 @@
 	    var getAll = function() {
 	      $http.get('/api/instances').success(function(response) {
 	        console.log(response);
-	        $scope.instances = response;
+	        $scope.instances = response.data;
 	      });
 	    };
 
@@ -30074,6 +30078,7 @@
 	        });
 	      }
 	    };
+	    $scope.logout = auth.logout;
 
 	  }]);
 	};
@@ -30086,10 +30091,10 @@
 	'use strict';
 
 	module.exports = function(app){
-		app.directive('newInstanceDirective', function(){
+		app.directive('newInstance', function(){
 			return {
 				restrict: 'AC',
-				templateUrl: './app/templates/settings/directives/new_instance_template.html',
+				templateUrl: '../../../templates/settings/directives/new_instance_template.html',
 				replace: true
 			}
 		});
@@ -30102,18 +30107,66 @@
 
 	'use strict';
 
-	module.exports = function(app){
-		app.directive('createUser', function(){
-			return {
-				restrict: 'AC',
-				templateUrl: './templates/views/create_user.html'
-			}
-		});
+	module.exports = function(app) {
+	  app.directive('createUser', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/create_user.html'
+	    }
+	  });
 	};
 
 
 /***/ },
 /* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('signIn', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/sign_in.html'
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('logout', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/logout.html'
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('currentGames', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/current_games.html'
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -30165,7 +30218,7 @@
 
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30201,52 +30254,6 @@
 				console.log(user);
 			};
 		}]);
-	};
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('simpleDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      template: '<h2>{{someVal}}</h2><input type="text" data-ng-model="someVal">',
-	      scope: {}
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('logoutDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      scope: {},
-	      template: '<div data-ng-show="signedIn()"><button  type="button" data-ng-click="signOut()">Log Out</button></div>',
-	      controller: ['$scope','$location', 'auth', function($scope, $location, auth) {
-	        $scope.signedIn = function() {
-	          return auth.isSignedIn();
-	        };
-
-	        $scope.signOut = function() {
-	          console.log('clicked');
-	          auth.logout();
-	          $location.path('/create_user');
-	        };
-	      }]
-	    }
-	  });
 	};
 
 
