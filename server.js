@@ -6,7 +6,7 @@ var config = require('./config')
 var port = process.env.PORT || 3000;
 
 
-mongoose.connect(config.database || process.env.DATABASE || 'mongodb://localhost/game_test');
+mongoose.connect(process.env.DATABASE);
 
 var apiRouter = express.Router();
 var authRouter = express.Router();
