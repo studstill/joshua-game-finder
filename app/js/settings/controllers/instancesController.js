@@ -7,7 +7,7 @@ module.exports = function(app) {
     var getAll = function() {
       $http.get('/api/instances').success(function(response) {
         console.log(response);
-        $scope.instances = response;
+        $scope.instances = response.data;
       });
     };
 

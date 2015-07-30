@@ -1,0 +1,46 @@
+<div data-ng-controller="instancesController" ng-model="query">
+  <h4>Arrange Games By: </h4>
+  <select ng-model="queryBy">
+    <option value="host">Host</option>
+    <option value="game">Game</option>
+    <option value="location">Location</option>
+  </select>
+  <ul>
+    <!-- existing games -->
+    <li data-ng-repeat="instance in instances.slice().reverse() | filter:query | orderBy: queryBy">
+      <h3>{{ instance.host }}'s {{ instance.game }} @ {{ instance.startTime }} at {{ instance.location }}</h3>
+      <ul>
+        <li>
+          Host name: {{ instance.host }}
+        </li>
+        <li>
+          Game: {{ instance.game }}
+        </li>
+        <li>
+          Where: {{ instance.location }}
+        </li>
+        <li>
+          Players Needed: {{ instance.playersNeeded }}
+        </li>
+        <li>
+          Signed Up: {{ instance.signedUp }}
+        </li>
+        <li>
+          Time: {{instance.startTime}}
+        </li>
+        <li>
+          Duration: {{instance.playTime}}
+        </li>
+        <li> <!-- ng-show="instance.creator === " -->
+          <button class="btn-caution" data-ng-click="edit(instance)">Edit</button>
+          <button class="btn-alert" data-ng-click="destroy(instance._id)">Remove</button>
+          <button class="game-over" data-ng-click="gameOverPutThing">Game Complete</button>
+        </li>
+        <li>
+          <button class="join-game" data-ng-click="putThing">Join This Game</button>
+          <button class="leave-game" data-ng-click="differentPutThing">Leave this game</button>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
