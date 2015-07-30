@@ -4,6 +4,8 @@ module.exports = function(app) {
   app.factory('auth', ['$http', '$cookies', function($http, $cookies) {
     return {
       signIn: function(user, callback) {
+        console.log("auth.js at singIn says: ");
+        console.log(user);
         $http.post('/auth/login', user)
           .success(function(data) {
             $cookies.put('jwt', data.token);
@@ -29,7 +31,8 @@ module.exports = function(app) {
       },
 
       logout: function() {
-        $cookies.put('jwt', '');
+        console.log("remove cookies please");
+        $cookies.remove('jwt');
       },
 
       isSignedIn: function() {
