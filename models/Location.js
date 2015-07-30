@@ -9,12 +9,14 @@ var locationSchema = Schema({
   zipCode: Number,
   phoneNumber: Number,
   url: String,
+  email: String,
   openTime: String,
   closeTime: String,
-  longitude: Number,
   latitude: Number,
+  longitude: Number,
   rating: Number,
-  maxGames: Number
+  maxGames: Number,
+  over21: Boolean
 });
 
 module.exports = mongoose.model('Location', locationSchema);
