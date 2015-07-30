@@ -23,8 +23,14 @@ var userSchema = Schema({
   lastName: String,
   city: String,
   state: String,
-  hosting: Boolean,
-  isCommitted: Boolean
+  hosting: {
+    type: Boolean,
+    default: false
+  },
+  isCommitted: {
+    type: Boolean,
+    default: false
+  },
 });
 
 userSchema.methods.createHash = function(password) {

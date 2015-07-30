@@ -9,7 +9,6 @@ module.exports = {
       if (err) {
         res.status(500).json({success: false, msg: 'Error finding instances', error: err});
       } else {
-
         res.json({success: true, msg: 'Get all instances successful', data: data});
       }
     });
@@ -21,7 +20,7 @@ module.exports = {
     User.findOneAndUpdate({_id: req.decoded._id}, {hosting: true,
       isCommitted: true}, function(err, numchanged) {
         if (err) {
-          res.status(500).json({success: false, msg: 'Error finding host user', error: err});
+          return res.status(500).json({success: false, msg: 'Error finding host user', error: err});
         }
     });
     instance.save(function(err, data) {
@@ -31,8 +30,6 @@ module.exports = {
         res.json({success: true, msg: 'Instance created successfully', data: data});;
       }
     });
-
-
   }
 
 };

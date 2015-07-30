@@ -23,11 +23,11 @@ module.exports = {
          if (err) {
           res.status(500).json(({success: false, msg: 'Error finding user', error: err}));
         } else {
-          User.update(user, req.body, {new: true}, function(err, updatedUser) {
+          User.update(user, req.body, function(err, nummAffected) {
             if (err) {
               res.status(500).json(({success: false, msg: 'Error updating user', error: err}));
             } else {
-              res.json({success: true, msg: 'User info updated successfully', data: updatedUser});
+              res.json({success: true, msg: 'User info updated successfully'});
             }
           });
         }
