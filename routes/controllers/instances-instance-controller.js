@@ -9,20 +9,29 @@ module.exports = {
       if (err) {
         res.status(500).json({success: false, msg: 'Error finding instance', error: err});
       } else {
-
         res.json({success: true, msg: 'Get instance successful', data: data});
       }
     });
   },
 
   delete: function(req, res) {
-    Instance.remove({_id: req.params.instance}, function(err, data) {
+    Instance.findOne({_id: req.params.instance}, function(err, instance) {
       if (err) {
-        res.status(500).json({success: false, msg: 'Error deleting instance', error: err});
+        res.status(500).json({success: false, msg: 'Error finding instance', error: err});
       } else {
-        res.json({success: true, msg: 'Delete instance successful', data: data});
+        if (req.decoded._id != instance.creator) {
+          res.status(403).json({success: false, msg: 'User does not have access to this file'});
+        } else {
+          Instance.remove({_id: req.params.instance}, function(err, data) {
+            if (err) {
+              res.status(500).json({success: false, msg: 'Error deleting instance', error: err});
+            } else {
+              res.json({success: true, msg: 'Delete instance successful', data: data});
+            }
+          });
+        }
       }
-    });
+    })
   },
 
   put: function(req, res) {
@@ -30,12 +39,14 @@ module.exports = {
       if (err) {
         res.status(500).json({success: false, msg: 'Error finding instance', error: err});
       } else if (instance.gameOver === true) {
+        // Cannot edit if gameOver is true
         res.status(403).json({msg: 'Game already marked as over changes not allowed'});
       } else {
-        if(req.decoded._id != instance.creator) {
+        // Must be the creator of the instance to edit it
+        if (req.decoded._id != instance.creator) {
           res.status(403).json({success: false, msg: 'User does not have access to this file'});
         } else {
-          Instance.update(instance, req.body, {new: true}, function(err, updatedInstance) {
+          Instance.update(instance, req.body, function(err, numAffected) {
             if (err) {
               res.status(500).json({success: false, msg: 'Error updating instance', error: err});
             } else {
@@ -43,7 +54,7 @@ module.exports = {
                 if (err) {
                   res.status(500).json({success: false, msg: 'Error finding instance', error: err});
                 } else {
-                  if (instance.gameOver = true) {
+                  if (instance.gameOver === true) {
                     User.findOneAndUpdate({_id: instance.creator}, {hosting: false, isCommitted: false}, function(err, numAffected) {
                       if (err) {
                         return res.status(500).json({success: false, msg: 'Error updating host status', error: err});
@@ -68,25 +79,42 @@ module.exports = {
   },
 
   join: function(req, res) {
-    User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: true},
-      function(err, numAffected) {
+    User.findOne({_id: req.decoded._id}, function(err, data) {
       if (err) {
-        return res.status(500).json({success: false, msg: 'Error finding user', error: err});
-      }
-    });
-    Instance.update({_id: req.params.instance}, {$inc: {signedUp: 1}},function(err, numAffected) {
-      if (err) {
-        return res.status(500).json({success: false, msg: 'Error finding user', error: err});
-      }
-    });
-    Instance.findOne({_id: req.params.instance}, function(err, instance) {
-      if (err) {
-        res.status(500).json({success: false, msg: 'Error finding instance', error: err});
+        res.status(500).json({success: false, msg: 'Error finding instances', error: err});
       } else {
-        instance.participants.push(req.decoded._id);
-        res.json({success: true, msg: 'Added user to instance', data: instance});
+        if (data.isCommitted === false) {
+          Instance.findOne({_id: req.params.instance}, function(err, instance) {
+            if (instance.signedUp === instance.playersNeeded) {
+              res.status(403).json({msg: 'Max number of players already reached'});
+            } else {
+              User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: true},
+                function(err, numAffected) {
+                if (err) {
+                  return res.status(500).json({success: false, msg: 'Error finding user', error: err});
+                }
+              });
+              Instance.update({_id: req.params.instance}, {$inc: {signedUp: 1}},function(err, numAffected) {
+                if (err) {
+                  return res.status(500).json({success: false, msg: 'Error finding user', error: err});
+                }
+              });
+              Instance.findOne({_id: req.params.instance}, function(err, instance) {
+                if (err) {
+                  res.status(500).json({success: false, msg: 'Error finding instance', error: err});
+                } else {
+                  instance.participants.push(req.decoded._id);
+                  instance.save();
+                  res.json({success: true, msg: 'Added user to instance', data: instance});
+                }
+              })
+            }
+          })
+        } else {
+          res.status(403).json({msg: 'User is committed to another game'});
+        }
       }
-    })
+    });
   },
 
   quit: function(req, res) {
@@ -96,20 +124,20 @@ module.exports = {
         return res.status(500).json({success: false, msg: 'Error finding user', error: err});
       }
     });
+    Instance.findOneAndUpdate({_id: req.params.instance}, {$inc: {signedUp: -1}}, {new: true}, function(err, updatedInstance) {
+      if (err) {
+       res.status(500).json({success: false, msg: 'Error finding instance', error: err})
+      }
+    });
     Instance.findOne({_id: req.params.instance}, function(err, instance) {
       if (err) {
         return res.status(500).json({success: false, msg: 'Error finding instance', error: err})
       } else {
         instance.participants.pull(req.decoded._id);
+        instance.save();
+        res.json({success: true, msg: 'Removed user from instance', data: instance});
       }
     })
-    Instance.findOneAndUpdate({_id: req.params.instance}, {$inc: {signedUp: -1}}, {new: true}, function(err, updatedInstance) {
-      if (err) {
-       res.status(500).json({success: false, msg: 'Error finding instance', error: err})
-      } else {
-        res.json({success: true, msg: 'Removed user from instance', data: updatedInstance});
-      }
-    });
   }
 
 };

@@ -17,8 +17,6 @@ module.exports = {
   },
 
   post: function(req, res) {
-    console.log("users-controller.js says: ");
-    console.log(req.body);
     var user = new User(req.body);
     user.password = user.createHash(user.password);
     user.save(function(err, data) {
