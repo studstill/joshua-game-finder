@@ -29907,6 +29907,8 @@
 	      },
 
 	      create: function(user, callback) {
+	        console.log("auth.js shows:");
+	        console.log(user);
 	        $http.post('/api/users', user)
 	          .success(function(data) {
 	            console.log(data);
@@ -29937,10 +29939,11 @@
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('instancesController', ['$scope', '$http', function($scope, $http) {
-
-	    var getAll = function(){
-	      $http.get('/api/instances').success(function(response){
+	  app.controller('instancesController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+	    var jwt = $cookies.get('jwt');
+	    $http.defaults.headers.common['x-access-token'] = jwt;
+	    var getAll = function() {
+	      $http.get('/api/instances').success(function(response) {
 	        console.log(response);
 	        $scope.instances = response;
 	      });
@@ -29952,10 +29955,10 @@
 	      console.log(instance);
 	      $http.post('/api/instances/', instance).success(function(response) {
 	        console.log("post successful");
-	        setTimeout(function(){
+	        setTimeout(function() {
 	          getAll();
-	      },2000);
-	    });
+	        }, 2000);
+	      });
 	    };
 
 	    $scope.destroy = function(id) {
@@ -29977,9 +29980,11 @@
 	    $scope.update = function(instance) {
 	      console.log(instance);
 	      $http.put('/api/instances/' + instance._id, instance)
-	        .error(function (error) {
+	        .error(function(error) {
 	          console.log(error);
-	          $scope.errors.push({msg: 'could not update instance'});
+	          $scope.errors.push({
+	            msg: 'could not update instance'
+	          });
 	        });
 	      instance.editing = false;
 	      getAll();
@@ -30035,17 +30040,19 @@
 	module.exports = function(app) {
 	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
 
-	    if (auth.isSignedIn()) $location.path('/notes');
+	    if (auth.isSignedIn()) $location.path('/');
 	    $scope.errors = [];
 	    $scope.authSubmit = function(user) {
-	      if (user.password_confirmation) {
+	      console.log("authController shows:");
+	      console.log(user);
+	      if (!user.password_confirmation) {
 	        auth.create(user, function(err) {
 	          if(err) {
 	            console.log(err);
 	            return $scope.errors.push({msg: 'could not sign in'});
 	          }
 
-	          $location.path('/notes');
+	          $location.path('/');
 	        })
 	      } else {
 	        auth.signIn(user, function(err) {
@@ -30054,7 +30061,7 @@
 	            return $scope.errors.push({msg: 'could not create user'});
 	          }
 
-	          $location.path('/notes');
+	          $location.path('/');
 	        });
 	      }
 	    };

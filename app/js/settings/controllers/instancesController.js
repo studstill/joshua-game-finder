@@ -1,10 +1,11 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('instancesController', ['$scope', '$http', function($scope, $http) {
-
-    var getAll = function(){
-      $http.get('/api/instances').success(function(response){
+  app.controller('instancesController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+    var jwt = $cookies.get('jwt');
+    $http.defaults.headers.common['x-access-token'] = jwt;
+    var getAll = function() {
+      $http.get('/api/instances').success(function(response) {
         console.log(response);
         $scope.instances = response;
       });
@@ -16,10 +17,10 @@ module.exports = function(app) {
       console.log(instance);
       $http.post('/api/instances/', instance).success(function(response) {
         console.log("post successful");
-        setTimeout(function(){
+        setTimeout(function() {
           getAll();
-      },2000);
-    });
+        }, 2000);
+      });
     };
 
     $scope.destroy = function(id) {
@@ -41,9 +42,11 @@ module.exports = function(app) {
     $scope.update = function(instance) {
       console.log(instance);
       $http.put('/api/instances/' + instance._id, instance)
-        .error(function (error) {
+        .error(function(error) {
           console.log(error);
-          $scope.errors.push({msg: 'could not update instance'});
+          $scope.errors.push({
+            msg: 'could not update instance'
+          });
         });
       instance.editing = false;
       getAll();

@@ -15,6 +15,8 @@ module.exports = function(app) {
       },
 
       create: function(user, callback) {
+        console.log("auth.js shows:");
+        console.log(user);
         $http.post('/api/users', user)
           .success(function(data) {
             console.log(data);
