@@ -1,12 +1,8 @@
-<form data-ng-controller="instancesController" data-ng-submit="submitForm(instance)">
-  <h4>I'm looking for: </h4>
-  <input data-ng-model="query[queryBy]">
-  <h4>Arranged by: </h4>
+<div data-ng-controller="instancesController" ng-model="query">
+  <h4>Arranged Games By: </h4>
   <select ng-model="queryBy">
-    <option value="$"></option>
     <option value="host">Host</option>
     <option value="game">Game</option>
     <option value="location">Location</option>
   </select>
-  <button type="submit">Submit</button>
-</form>
+</div>

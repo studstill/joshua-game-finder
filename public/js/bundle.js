@@ -48,13 +48,15 @@
 	__webpack_require__(9);
 	__webpack_require__(8);
 	__webpack_require__(7);
-	__webpack_require__(13);
+	__webpack_require__(17);
 	__webpack_require__(11);
 	__webpack_require__(10);
-	__webpack_require__(14);
-	__webpack_require__(15);
+	__webpack_require__(18);
+	__webpack_require__(13);
 	__webpack_require__(16);
-	module.exports = __webpack_require__(12);
+	__webpack_require__(15);
+	__webpack_require__(12);
+	module.exports = __webpack_require__(14);
 
 
 /***/ },
@@ -79,6 +81,10 @@
 
 	//directives
 	__webpack_require__(12)(gameApp);
+	__webpack_require__(13)(gameApp);
+	__webpack_require__(14)(gameApp);
+	__webpack_require__(15)(gameApp);
+	__webpack_require__(16)(gameApp);
 
 	//routeProvider
 	//require(....)(app);
@@ -29896,6 +29902,8 @@
 	  app.factory('auth', ['$http', '$cookies', function($http, $cookies) {
 	    return {
 	      signIn: function(user, callback) {
+	        console.log("auth.js at singIn says: ");
+	        console.log(user);
 	        $http.post('/auth/login', user)
 	          .success(function(data) {
 	            $cookies.put('jwt', data.token);
@@ -29921,7 +29929,8 @@
 	      },
 
 	      logout: function() {
-	        $cookies.put('jwt', '');
+	        console.log("remove cookies please");
+	        $cookies.remove('jwt');
 	      },
 
 	      isSignedIn: function() {
@@ -29945,7 +29954,7 @@
 	    var getAll = function() {
 	      $http.get('/api/instances').success(function(response) {
 	        console.log(response);
-	        $scope.instances = response;
+	        $scope.instances = response.data;
 	      });
 	    };
 
@@ -30038,33 +30047,39 @@
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('authController', ['$scope','$location', 'auth', function($scope, $location, auth) {
+	  app.controller('authController', ['$scope', '$location', 'auth', function($scope, $location, auth) {
 
 	    if (auth.isSignedIn()) $location.path('/');
 	    $scope.errors = [];
 	    $scope.authSubmit = function(user) {
 	      console.log("authController shows:");
 	      console.log(user);
-	      if (!user.password_confirmation) {
+	      if (user.email) { //was user.password_confirmation
 	        auth.create(user, function(err) {
-	          if(err) {
+	          if (err) {
 	            console.log(err);
-	            return $scope.errors.push({msg: 'could not sign in'});
+	            return $scope.errors.push({
+	              msg: 'could not sign in'
+	            });
 	          }
 
 	          $location.path('/');
 	        })
 	      } else {
 	        auth.signIn(user, function(err) {
-	          if(err) {
+	          if (err) {
 	            console.log(err);
-	            return $scope.errors.push({msg: 'could not create user'});
+	            return $scope.errors.push({
+	              msg: 'could not create user'
+	            });
 	          }
 
 	          $location.path('/');
 	        });
 	      }
 	    };
+	    $scope.logout = auth.logout;
+
 	  }]);
 	};
 
@@ -30076,22 +30091,82 @@
 	'use strict';
 
 	module.exports = function(app){
-		app.directive('newInstanceDirective', function(){
+		app.directive('newInstance', function(){
 			return {
 				restrict: 'AC',
-				templateUrl: './app/templates/settings/directives/new_instance_template.html',
+				templateUrl: '../../../templates/settings/directives/new_instance_template.html',
 				replace: true
 			}
 		});
-		// angular.module("orderByDate", [])
-		// .controller("instancesController", ["$scope"], function(scope){
-		// 	$scope.instances;
-		// });
 	};
 
 
 /***/ },
 /* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('createUser', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/create_user.html'
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('signIn', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/sign_in.html'
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('logout', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/logout.html'
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('currentGames', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/current_games.html'
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -30143,7 +30218,7 @@
 
 
 /***/ },
-/* 14 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30179,52 +30254,6 @@
 				console.log(user);
 			};
 		}]);
-	};
-
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('simpleDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      template: '<h2>{{someVal}}</h2><input type="text" data-ng-model="someVal">',
-	      scope: {}
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.directive('logoutDirective', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      scope: {},
-	      template: '<div data-ng-show="signedIn()"><button  type="button" data-ng-click="signOut()">Log Out</button></div>',
-	      controller: ['$scope','$location', 'auth', function($scope, $location, auth) {
-	        $scope.signedIn = function() {
-	          return auth.isSignedIn();
-	        };
-
-	        $scope.signOut = function() {
-	          console.log('clicked');
-	          auth.logout();
-	          $location.path('/create_user');
-	        };
-	      }]
-	    }
-	  });
 	};
 
 
