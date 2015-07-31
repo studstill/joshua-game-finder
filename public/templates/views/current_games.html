@@ -16,6 +16,9 @@
         <li>
           Players Needed: {{ instance.playersNeeded }}
         </li>
+        <li data-ng-repeat="participant in instance.participants">
+          Users Signed Up: {{ participant.username }}
+        </li>
         <li>
           Host name: {{ instance.host }}
         </li>

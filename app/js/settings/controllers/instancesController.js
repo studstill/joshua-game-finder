@@ -9,6 +9,9 @@ module.exports = function(app) {
         $scope.instances = response.data;
         $scope.userId = response.userId;
       });
+      $http.get('/api/locations').success(function(response) {
+        $scope.locations = response.data;
+      });
     };
 
     getAll();
