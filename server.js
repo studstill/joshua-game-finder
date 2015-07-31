@@ -13,6 +13,8 @@ var authRouter = express.Router();
 
 require('./routes/users-routes')(apiRouter);
 require('./routes/instance-routes')(apiRouter);
+require('./routes/locations-routes')(apiRouter);
+require('./routes/games-routes')(apiRouter);
 
 require('./routes/auth-routes')(authRouter);
 
