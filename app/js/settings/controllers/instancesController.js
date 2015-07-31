@@ -1,13 +1,16 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('instancesController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
     var jwt = $cookies.get('jwt');
     $http.defaults.headers.common['x-access-token'] = jwt;
     var getAll = function() {
       $http.get('/api/instances').success(function(response) {
         console.log(response);
         $scope.instances = response.data;
+        console.log("does this get response.userId? ");
+        console.log(response.userId);
+        $scope.userId = response.userId;
       });
     };
 
@@ -17,9 +20,9 @@ module.exports = function(app) {
       console.log(instance);
       $http.post('/api/instances/', instance).success(function(response) {
         console.log("post successful");
-        setTimeout(function() {
-          getAll();
-        }, 2000);
+        $http.get('/api/instances').success(function(response) {
+          $scope.instances = response.data;
+        });
       });
     };
 
@@ -41,7 +44,7 @@ module.exports = function(app) {
 
     $scope.update = function(instance) {
       console.log(instance);
-      $http.put('/api/instances/' + instance._id, instance)
+      $http.put('/api/instances/' + id, instance)
         .error(function(error) {
           console.log(error);
           $scope.errors.push({
@@ -51,7 +54,20 @@ module.exports = function(app) {
       instance.editing = false;
       getAll();
     };
-
+    $scope.reloadPage = function() {
+      $window.location.reload();
+    };
+    $scope.join = function(id){
+      $http.put('/api/instances/' + id + "/join");
+    };
+    $scope.quit = function(id){
+      $http.put('/api/instances/' + id + "/quit");
+    };
+    $scope.gameOver = function(id){
+      $http.put('/api/instances/' + id, {
+        gameOver: true
+      });
+    };
   }]);
 };
 
