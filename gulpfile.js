@@ -7,9 +7,6 @@ var sass = require('gulp-sass');
 gulp.task('sass', function() {
   gulp.src('./app/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(minifyCss({
-      compatibility: 'ie8'
-    }))
     .pipe(gulp.dest('./public/css'));
 });
 
@@ -41,5 +38,5 @@ gulp.task('copy', function() {
 gulp.task("copy:watch", function() {
   gulp.watch("./app/**/*.html", ["copy"]);
 });
-gulp.task('build', ['copy', 'webpackdev', 'copy:watch', 'webpackdev:watch']);
+gulp.task('build', ['copy', 'webpackdev', 'sass', 'copy:watch', 'webpackdev:watch', 'sass:watch']);
 gulp.task('default', ['build']);

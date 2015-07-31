@@ -1,5 +1,9 @@
-<section data-ng-controller="authController">
-  <form data-ng-submit="logout()">
-    <button type="submit" ng-click="reloadPage()">Log Out</button>
-  </form>
-</section>
+<div class="controller" ng-show="userId">
+  <section data-ng-controller="authController">
+    <div class="row">
+      <form data-ng-submit="logout()" class="offset-by-four columns three columns">
+        <button type="submit" ng-click="reloadPage()">Log Out</button>
+      </form>
+    </div>
+  </section>
+</div>

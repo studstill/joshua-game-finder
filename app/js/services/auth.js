@@ -25,6 +25,7 @@ module.exports = function(app) {
           });
       },
 
+
       logout: function() {
         $cookies.remove('jwt');
       },
