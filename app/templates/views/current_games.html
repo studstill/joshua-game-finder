@@ -1,4 +1,5 @@
-<div data-ng-controller="instancesController" ng-model="query">
+<div data-ng-controller="instancesController" ng-model="query" ng-show="userId">
+  <h2> Current Games </h2>
   <h4>Arrange Games By: </h4>
   <select ng-model="queryBy">
     <option value="host">Host</option>
@@ -36,18 +37,31 @@
         <li>
           Duration: {{instance.playTime}}
         </li>
-        <li>
-          Game Over: {{ instance.gameOver }}
-        </li>
-        <form ng-show="userId === instance.creator">
-          <!-- <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button> -->
-          <button class="btn-alert" type="submit" data-ng-click="destroy(instance._id); reloadPage()">Remove</button>
-          <button type="submit" class="game-over" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
-        </form>
-        <form ng-show="userId !== instance.creator">
-          <button class="join-game" type="submit" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
-          <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
-        </form>
+        <div class="container">
+          <form ng-show="userId === instance.creator">
+            <div class="row">
+              <div class="three columns">
+                <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button>
+              </div>
+              <div class="three columns">
+                <button class="btn-alert" type="submit" data-ng-click="destroy(instance._id); reloadPage()">Remove</button>
+              </div>
+              <div class="three columns">
+                <button type="submit" class="game-over" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
+              </div>
+            </div>
+          </form>
+          <form ng-show="userId !== instance.creator">
+            <div class="row">
+              <div class="three columns">
+                <button class="join-game" type="submit" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+              </div>
+              <div class="three columns">
+                <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </ul>
     </li>
   </ul>
