@@ -8,7 +8,7 @@ module.exports = function(router) {
 
   router.use(bodyParser.json());
 
-  router.get('/instances', instancesController.get)
+  router.get('/instances', verify, instancesController.get)
   router.post('/instances', verify, instancesController.post)
 
   router.get('/instances/:instance', instancesInstanceController.get)

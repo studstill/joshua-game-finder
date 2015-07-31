@@ -11,6 +11,12 @@
       <h3>{{ instance.host }}'s {{ instance.game }} @ {{ instance.startTime }} at {{ instance.location }}</h3>
       <ul>
         <li>
+          Signed Up: {{ instance.signedUp }}
+        </li>
+        <li>
+          Players Needed: {{ instance.playersNeeded }}
+        </li>
+        <li>
           Host name: {{ instance.host }}
         </li>
         <li>
@@ -20,26 +26,20 @@
           Where: {{ instance.location }}
         </li>
         <li>
-          Players Needed: {{ instance.playersNeeded }}
-        </li>
-        <li>
-          Signed Up: {{ instance.signedUp }}
-        </li>
-        <li>
           Time: {{instance.startTime}}
         </li>
         <li>
           Duration: {{instance.playTime}}
         </li>
-        <li> <!-- ng-show="instance.creator === " -->
-          <button class="btn-caution" data-ng-click="edit(instance)">Edit</button>
-          <button class="btn-alert" data-ng-click="destroy(instance._id)">Remove</button>
-          <button class="game-over" data-ng-click="gameOverPutThing">Game Complete</button>
-        </li>
-        <li>
-          <button class="join-game" data-ng-click="putThing">Join This Game</button>
-          <button class="leave-game" data-ng-click="differentPutThing">Leave this game</button>
-        </li>
+        <form ng-show="userId === instance.creator">
+          <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button>
+          <button class="btn-alert" type="submit" data-ng-click="destroy(instance._id); reloadPage()">Remove</button>
+          <button type="submit" class="game-over" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
+        </form>
+        <form ng-show="userId !== instance.creator">
+          <button class="join-game" type="submit" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+          <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
+        </form>
       </ul>
     </li>
   </ul>

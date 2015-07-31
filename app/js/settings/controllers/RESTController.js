@@ -23,12 +23,6 @@ module.exports = function(app) {
             .error(handleError(callback));
         },
 
-        // create: function(resourceData, callback) {
-        //   $http.post('/api/' + resourceName, resourceData)
-        //     .success(handleSuccess(callback))
-        //     .error(handleError(callback));
-        // },
-
         save: function(resourceData, callback) {
           $http.put('/api/' + resourceName + '/' + resourceData._id, resourceData)
             .success(handleSuccess(callback))
