@@ -3,7 +3,8 @@
 require('angular/angular');
 require('angular-route');
 require('angular-cookies');
-var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies']);
+require('angucomplete-alt');
+var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies', "angucomplete-alt"]);
 
 //services
 require('./services/resourceServices.js')(gameApp);

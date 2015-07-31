@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/studstill/joshua-game-finder#readme",
   "dependencies": {
+    "angucomplete-alt": "^1.1.0",
+    "angular": "^1.4.3",
+    "angular-route": "^1.4.3",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
@@ -33,8 +36,7 @@
     "mongoose": "^4.1.0",
     "morgan": "^1.6.1",
     "passport": "^0.2.2",
-    "passport-local": "^1.0.0",
-    "angular": "^1.4.3"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "angular-cookies": "^1.4.0",

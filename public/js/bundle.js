@@ -45,12 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
+	__webpack_require__(10);
 	__webpack_require__(9);
 	__webpack_require__(8);
-	__webpack_require__(7);
 	__webpack_require__(17);
 	__webpack_require__(11);
-	__webpack_require__(10);
+	__webpack_require__(2);
 	__webpack_require__(18);
 	__webpack_require__(13);
 	__webpack_require__(16);
@@ -65,18 +65,19 @@
 
 	'use strict';
 
-	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(5);
-	var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies']);
+	__webpack_require__(4);
+	__webpack_require__(6);
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"angucomplete-alt\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies', "angucomplete-alt"]);
 
 	//services
-	__webpack_require__(7)(gameApp);
 	__webpack_require__(8)(gameApp);
 	__webpack_require__(9)(gameApp);
+	__webpack_require__(10)(gameApp);
 
 	//controllers
-	__webpack_require__(10)(gameApp);
+	__webpack_require__(2)(gameApp);
 	__webpack_require__(11)(gameApp);
 
 	//directives
@@ -89,6 +90,78 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
+	    var jwt = $cookies.get('jwt');
+	    $http.defaults.headers.common['x-access-token'] = jwt;
+	    var getAll = function() {
+	      $http.get('/api/instances').success(function(response) {
+	        $scope.instances = response.data;
+	        $scope.userId = response.userId;
+	      });
+	      $http.get('/api/locations').success(function(response) {
+	        $scope.locations = response.data;
+	      });
+	    };
+
+	    getAll();
+
+	    $scope.submitForm = function(instance) {
+	      $http.post('/api/instances/', instance).success(function(response) {
+	        $http.get('/api/instances').success(function(response) {
+	          $scope.instances = response.data;
+	        });
+	      });
+	    };
+
+	    $scope.destroy = function(id) {
+	      $http.delete('/api/instances/' + id).success(function(response) {
+	        getAll();
+	      });
+	    }
+
+	    $scope.edit = function(instance) {
+	      instance.editing = true;
+	    };
+
+	    $scope.cancel = function(instance) {
+	      getAll();
+	    };
+
+	    $scope.update = function(instance) {
+	      $http.put('/api/instances/' + id, instance)
+	        .error(function(error) {
+	          $scope.errors.push({
+	            msg: 'could not update instance'
+	          });
+	        });
+	      instance.editing = false;
+	      getAll();
+	    };
+	    $scope.reloadPage = function() {
+	      $window.location.reload();
+	    };
+	    $scope.join = function(id){
+	      $http.put('/api/instances/' + id + "/join");
+	    };
+	    $scope.quit = function(id){
+	      $http.put('/api/instances/' + id + "/quit");
+	    };
+	    $scope.gameOver = function(id){
+	      $http.put('/api/instances/' + id, {
+	        gameOver: true
+	      });
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28457,15 +28530,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
+	__webpack_require__(5);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/**
@@ -29463,15 +29536,15 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(6);
+	__webpack_require__(7);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/**
@@ -29798,14 +29871,13 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function(app) {
 		var handleError = function(data) {
-			console.log(data);
 		};
 
 		app.factory('resource', ['$http', function($http){
@@ -29853,7 +29925,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29872,7 +29944,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29881,8 +29953,6 @@
 	  app.factory('auth', ['$http', '$cookies', function($http, $cookies) {
 	    return {
 	      signIn: function(user, callback) {
-	        console.log("auth.js at singIn says: ");
-	        console.log(user);
 	        $http.post('/auth/login', user)
 	          .success(function(data) {
 	            $cookies.put('jwt', data.token);
@@ -29894,11 +29964,8 @@
 	      },
 
 	      create: function(user, callback) {
-	        console.log("auth.js shows:");
-	        console.log(user);
 	        $http.post('/api/users', user)
 	          .success(function(data) {
-	            console.log(data);
 	            $cookies.put('jwt', data.token)
 	            callback(null);
 	          })
@@ -29907,8 +29974,8 @@
 	          });
 	      },
 
-	      logout: function($scope) {
-	        console.log("remove cookies please");
+
+	      logout: function() {
 	        $cookies.remove('jwt');
 	      },
 
@@ -29918,121 +29985,6 @@
 	    };
 	  }]);
 	};
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
-	    var jwt = $cookies.get('jwt');
-	    $http.defaults.headers.common['x-access-token'] = jwt;
-	    var getAll = function() {
-	      $http.get('/api/instances').success(function(response) {
-	        console.log(response);
-	        $scope.instances = response.data;
-	        console.log("does this get response.userId? ");
-	        console.log(response.userId);
-	        $scope.userId = response.userId;
-	      });
-	    };
-
-	    getAll();
-
-	    $scope.submitForm = function(instance) {
-	      console.log(instance);
-	      $http.post('/api/instances/', instance).success(function(response) {
-	        console.log("post successful");
-	        $http.get('/api/instances').success(function(response) {
-	          $scope.instances = response.data;
-	        });
-	      });
-	    };
-
-	    $scope.destroy = function(id) {
-	      console.log(id);
-	      $http.delete('/api/instances/' + id).success(function(response) {
-	        getAll();
-	      });
-	    }
-
-	    $scope.edit = function(instance) {
-	      instance.editing = true;
-	      console.log(instance);
-	    };
-
-	    $scope.cancel = function(instance) {
-	      getAll();
-	    };
-
-	    $scope.update = function(instance) {
-	      console.log(instance);
-	      $http.put('/api/instances/' + id, instance)
-	        .error(function(error) {
-	          console.log(error);
-	          $scope.errors.push({
-	            msg: 'could not update instance'
-	          });
-	        });
-	      instance.editing = false;
-	      getAll();
-	    };
-	    $scope.reloadPage = function() {
-	      $window.location.reload();
-	    };
-	    $scope.join = function(id){
-	      $http.put('/api/instances/' + id + "/join");
-	    };
-	    $scope.quit = function(id){
-	      $http.put('/api/instances/' + id + "/quit");
-	    };
-	    $scope.gameOver = function(id){
-	      $http.put('/api/instances/' + id, {
-	        gameOver: true
-	      });
-	    };
-	  }]);
-	};
-
-
-
-	// 'use strict';
-	//
-	// module.exports = function(app) {
-	// 	app.controller('instancesController', ['$scope', 'resource', function($scope, resource) {
-	//
-	// 		var Instance = resource('instances');
-	//
-	// 		$scope.getInstances = function(){
-	// 			Instance.getAll(function(response){
-	// 				console.log(response);
-	// 				$scope.instances = response;
-	// 			});
-	// 		};
-	//
-	// 		$scope.submitForm = function(instance) {
-	// 			console.log('submitted');
-	// 			Instance.submitForm(instance, function(response) {
-	// 				$scope.getInstances();
-	// 			});
-	// 		};
-	//
-	// 		$scope.destroy = function(id) {
-	// 			console.log(id);
-	// 			Instance.destroy(id, function(response) {
-	// 				$scope.getInstances();
-	// 			});
-	// 		}
-	//
-	// 		$scope.edit = function(instance) {
-	// 			Instance.editing = true;
-	// 			console.log(instance);
-	// 		};
-	// 	}]);
-	// };
 
 
 /***/ },
@@ -30047,12 +29999,9 @@
 	    if (auth.isSignedIn()) $location.path('/');
 	    $scope.errors = [];
 	    $scope.authSubmit = function(user) {
-	      console.log("authController shows:");
-	      console.log(user);
 	      if (user.email) { //was user.password_confirmation
 	        auth.create(user, function(err) {
 	          if (err) {
-	            console.log(err);
 	            return $scope.errors.push({
 	              msg: 'could not sign in'
 	            });
@@ -30063,7 +30012,6 @@
 	      } else {
 	        auth.signIn(user, function(err) {
 	          if (err) {
-	            console.log(err);
 	            return $scope.errors.push({
 	              msg: 'could not create user'
 	            });
@@ -30173,7 +30121,6 @@
 	module.exports = function(app) {
 	  var handleError = function(callback) {
 	    return function(data) {
-	      console.log(data);
 	      callback(data);
 	    };
 	  };
@@ -30225,20 +30172,17 @@
 
 			$scope.getUsers = function(){
 				User.getAll(function(response){
-					console.log(response);
 					$scope.users = response;
 				});
 			};
 
 			$scope.submitForm = function(user) {
-				console.log('submitted');
 				user.submitForm(user, function(response) {
 					$scope.getUsers();
 				});
 			};
 
 			$scope.destroy = function(id) {
-				console.log(id);
 				User.destroy(id, function(response) {
 					$scope.getUsers();
 				});
@@ -30246,7 +30190,6 @@
 
 			$scope.edit = function(user) {
 				user.editing = true;
-				console.log(user);
 			};
 		}]);
 	};

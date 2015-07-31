@@ -6,12 +6,9 @@ module.exports = function(app) {
     if (auth.isSignedIn()) $location.path('/');
     $scope.errors = [];
     $scope.authSubmit = function(user) {
-      console.log("authController shows:");
-      console.log(user);
       if (user.email) { //was user.password_confirmation
         auth.create(user, function(err) {
           if (err) {
-            console.log(err);
             return $scope.errors.push({
               msg: 'could not sign in'
             });
@@ -22,7 +19,6 @@ module.exports = function(app) {
       } else {
         auth.signIn(user, function(err) {
           if (err) {
-            console.log(err);
             return $scope.errors.push({
               msg: 'could not create user'
             });
