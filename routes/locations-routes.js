@@ -1,4 +1,5 @@
 var locationsController = require('./controllers/locations-controller');
+var locationsLocationController = require('./controllers/locations-location-controller');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var verify = require('./middleware/verify');
