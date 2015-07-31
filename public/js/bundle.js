@@ -86,27 +86,6 @@
 	__webpack_require__(15)(gameApp);
 	__webpack_require__(16)(gameApp);
 
-	//routeProvider
-	//require(....)(app);
-
-
-	//New file
-
-	gameApp.config(['$routeProvider', function($routeProvider) {
-	  $routeProvider
-	    .when('/addInstance', {
-	      templateUrl: './templates/settings/directives/new_instance_template.html',
-	      controller: 'instancesController'
-	    })
-	    .when('/searchForm', {
-	      templateUrl: './templates/settings/directives/search_form.html',
-	      controller: 'instancesController'
-	    })
-	    .otherwise({
-	      redirectTo: '/'
-	    });
-	}]);
-
 
 /***/ },
 /* 2 */
@@ -29948,13 +29927,16 @@
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('instancesController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+	  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
 	    var jwt = $cookies.get('jwt');
 	    $http.defaults.headers.common['x-access-token'] = jwt;
 	    var getAll = function() {
 	      $http.get('/api/instances').success(function(response) {
 	        console.log(response);
 	        $scope.instances = response.data;
+	        console.log("does this get response.userId? ");
+	        console.log(response.userId);
+	        $scope.userId = response.userId;
 	      });
 	    };
 
@@ -29964,9 +29946,9 @@
 	      console.log(instance);
 	      $http.post('/api/instances/', instance).success(function(response) {
 	        console.log("post successful");
-	        setTimeout(function() {
-	          getAll();
-	        }, 2000);
+	        $http.get('/api/instances').success(function(response) {
+	          $scope.instances = response.data;
+	        });
 	      });
 	    };
 
@@ -29988,7 +29970,7 @@
 
 	    $scope.update = function(instance) {
 	      console.log(instance);
-	      $http.put('/api/instances/' + instance._id, instance)
+	      $http.put('/api/instances/' + id, instance)
 	        .error(function(error) {
 	          console.log(error);
 	          $scope.errors.push({
@@ -29998,7 +29980,20 @@
 	      instance.editing = false;
 	      getAll();
 	    };
-
+	    $scope.reloadPage = function() {
+	      $window.location.reload();
+	    };
+	    $scope.join = function(id){
+	      $http.put('/api/instances/' + id + "/join");
+	    };
+	    $scope.quit = function(id){
+	      $http.put('/api/instances/' + id + "/quit");
+	    };
+	    $scope.gameOver = function(id){
+	      $http.put('/api/instances/' + id, {
+	        gameOver: true
+	      });
+	    };
 	  }]);
 	};
 
@@ -30193,12 +30188,6 @@
 	            .success(handleSuccess(callback))
 	            .error(handleError(callback));
 	        },
-
-	        // create: function(resourceData, callback) {
-	        //   $http.post('/api/' + resourceName, resourceData)
-	        //     .success(handleSuccess(callback))
-	        //     .error(handleError(callback));
-	        // },
 
 	        save: function(resourceData, callback) {
 	          $http.put('/api/' + resourceName + '/' + resourceData._id, resourceData)
