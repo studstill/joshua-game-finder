@@ -7,20 +7,17 @@ module.exports = function(app) {
 
 		$scope.getUsers = function(){
 			User.getAll(function(response){
-				console.log(response);
 				$scope.users = response;
 			});
 		};
 
 		$scope.submitForm = function(user) {
-			console.log('submitted');
 			user.submitForm(user, function(response) {
 				$scope.getUsers();
 			});
 		};
 
 		$scope.destroy = function(id) {
-			console.log(id);
 			User.destroy(id, function(response) {
 				$scope.getUsers();
 			});
@@ -28,7 +25,6 @@ module.exports = function(app) {
 
 		$scope.edit = function(user) {
 			user.editing = true;
-			console.log(user);
 		};
 	}]);
 };

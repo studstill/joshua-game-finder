@@ -5,6 +5,8 @@
     <option value="host">Host</option>
     <option value="game">Game</option>
     <option value="location">Location</option>
+    <option value="gameOver">Game Status</option>
+    <option value="date">Recently Added</option>
   </select>
   <ul>
     <!-- existing games -->
@@ -16,6 +18,9 @@
         </li>
         <li>
           Players Needed: {{ instance.playersNeeded }}
+        </li>
+        <li data-ng-repeat="participant in instance.participants">
+          Users Signed Up: {{ participant.username }}
         </li>
         <li>
           Host name: {{ instance.host }}
