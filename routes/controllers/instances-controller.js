@@ -5,13 +5,6 @@ var User = require(__dirname + '/../../models/User.js');
 module.exports = {
 
   get: function(req, res) {
-    // Instance.find({}, function(err, data) {
-    //   if (err) {
-    //     res.status(500).json({success: false, msg: 'Error finding instances', error: err});
-    //   } else {
-    //     res.json({success: true, msg: 'Get all instances successful', data: data, userId: req.decoded._id});
-    //   }
-    // });
     Instance.find({}).populate('participants').exec(function(err, instances){
       if (err) {
         res.status(500).json({success: false, msg: 'Error finding instances', error: err});

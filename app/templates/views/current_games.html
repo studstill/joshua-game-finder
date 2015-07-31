@@ -4,6 +4,8 @@
     <option value="host">Host</option>
     <option value="game">Game</option>
     <option value="location">Location</option>
+    <option value="gameOver">Game Status</option>
+    <option value="date">Recently Added</option>
   </select>
   <ul>
     <!-- existing games -->
@@ -34,8 +36,11 @@
         <li>
           Duration: {{instance.playTime}}
         </li>
+        <li>
+          Game Over: {{ instance.gameOver }}
+        </li>
         <form ng-show="userId === instance.creator">
-          <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button>
+          <!-- <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button> -->
           <button class="btn-alert" type="submit" data-ng-click="destroy(instance._id); reloadPage()">Remove</button>
           <button type="submit" class="game-over" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
         </form>

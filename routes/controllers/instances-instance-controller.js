@@ -94,6 +94,8 @@ module.exports = {
           Instance.findOne({_id: req.params.instance}, function(err, instance) {
             if (instance.signedUp === instance.playersNeeded) {
               res.status(403).json({msg: 'Max number of players already reached'});
+            } else if (instance.gameOver === true) {
+              res.status(403).json({msg: 'Game already over'});
             } else {
               User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: true},
                 function(err, numAffected) {
