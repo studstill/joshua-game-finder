@@ -101,16 +101,12 @@ module.exports = {
                   return res.status(500).json({success: false, msg: 'Error finding user', error: err});
                 }
               });
-              Instance.update({_id: req.params.instance}, {$inc: {signedUp: 1}},function(err, numAffected) {
-                if (err) {
-                  return res.status(500).json({success: false, msg: 'Error finding user', error: err});
-                }
-              });
               Instance.findOne({_id: req.params.instance}, function(err, instance) {
                 if (err) {
                   res.status(500).json({success: false, msg: 'Error finding instance', error: err});
                 } else {
                   instance.participants.push(req.decoded._id);
+                  instance.signedUp = instance.participants.length;
                   instance.save();
                   res.json({success: true, msg: 'Added user to instance', data: instance});
                 }
@@ -125,24 +121,23 @@ module.exports = {
   },
 
   quit: function(req, res) {
-    User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: false},
-      function(err, numAffected) {
+    Instance.findOne({_id: req.params.instance}, function(err, instance) {
       if (err) {
-        return res.status(500).json({success: false, msg: 'Error finding user', error: err});
+        return res.status(500).json({success: false, msg: 'Error finding instance', error: err})
       } else {
-        Instance.findOneAndUpdate({_id: req.params.instance}, {$inc: {signedUp: -1}}, {new: true}, function(err, updatedInstance) {
-          if (err) {
-           res.status(500).json({success: false, msg: 'Error finding instance', error: err})
+        instance.participants.forEach(function(participant) {
+          if (participant == req.decoded._id) {
+            User.findOneAndUpdate({_id: req.decoded._id}, {isCommitted: false}, function(err, numAffected) {
+              if (err) {
+                return res.status(500).json({success: false, msg: 'Error finding user', error: err});
+              } else {
+                instance.participants.pull(req.decoded._id);
+                instance.signedUp = instance.participants.length;
+                instance.save();
+                res.json({success: true, msg: 'Removed user from instance', data: instance});
+              }
+            });
           }
-          Instance.findOne({_id: req.params.instance}, function(err, instance) {
-            if (err) {
-              return res.status(500).json({success: false, msg: 'Error finding instance', error: err})
-            } else {
-              instance.participants.pull(req.decoded._id);
-              instance.save();
-              res.json({success: true, msg: 'Removed user from instance', data: instance});
-            }
-          })
         });
       }
     });
