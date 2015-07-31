@@ -9,7 +9,7 @@ module.exports = {
       if (err) {
         res.status(500).json({success: false, msg: 'Error finding instances', error: err});
       } else {
-        res.json({success: true, msg: 'Get all instances successful', data: data});
+        res.json({success: true, msg: 'Get all instances successful', data: data, userId: req.decoded._id});
       }
     });
   },

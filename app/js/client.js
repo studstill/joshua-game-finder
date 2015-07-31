@@ -20,24 +20,3 @@ require('./settings/directives/create_user_directive.js')(gameApp);
 require('./settings/directives/sign_in_directive.js')(gameApp);
 require('./settings/directives/logout_directive.js')(gameApp);
 require('./settings/directives/current_games_directive.js')(gameApp);
-
-//routeProvider
-//require(....)(app);
-
-
-//New file
-
-gameApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider
-    .when('/addInstance', {
-      templateUrl: './templates/settings/directives/new_instance_template.html',
-      controller: 'instancesController'
-    })
-    .when('/searchForm', {
-      templateUrl: './templates/settings/directives/search_form.html',
-      controller: 'instancesController'
-    })
-    .otherwise({
-      redirectTo: '/'
-    });
-}]);
