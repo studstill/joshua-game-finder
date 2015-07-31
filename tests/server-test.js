@@ -7,7 +7,7 @@ var server           = require(__dirname + '/../server');
 var chaiHttp         = require('chai-http');
 var mongoose         = require('mongoose');
 var expect           = chai.expect;
-process.env.MONGOLAB_URI = 'mongodb://localhost/game_test2';
+process.env.DATABASE = 'mongodb://localhost/game_test2';
 chai.use(chaiHttp);
 
 var testy = {
@@ -26,6 +26,16 @@ var zesty = {
   email: 'zesty@email.com',
   firstName: 'zesty',
   lastName: 'zesty',
+  city: 'Seattle',
+  state: 'WA'
+};
+
+var nesty = {
+  username: 'nesty',
+  password: 'password123',
+  email: 'nesty@email.com',
+  firstName: 'nesty',
+  lastName: 'nesty',
   city: 'Seattle',
   state: 'WA'
 };
@@ -167,9 +177,21 @@ describe('Users REST API', function() {
 describe('Instances REST API', function() {
   testId = '';
   testId2 = '';
+
   testInstance2 = new Instance({
-      host: 'Phil',
+      host: 'phil',
       game: 'somethingelse',
+      location: 'Here',
+      playersNeeded: '3',
+      signedUp: '0',
+      startTime: '14:00',
+      playTime: '2hrs',
+      gameOver: false
+    });
+
+  testInstance3 = new Instance({
+      host: 'phil',
+      game: 'anotherGame',
       location: 'Here',
       playersNeeded: '3',
       signedUp: '0',
@@ -218,14 +240,31 @@ describe('Instances REST API', function() {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
+        // Assign testId2
         testId2 = res.body.data._id;
-
         User.findOne({username: "phil"}, function(err, data) {
           if (err) throw err;
           expect(data.hosting).to.eql(true);
           expect(data.isCommitted).to.eql(true);
+          done();
         });
-        done();
+      });
+  });
+
+  it('should not allow users to POST /instances if isCommitted is "true"', function(done) {
+    chai.request('localhost:3000')
+      .post('/api/instances')
+      .set('x-access-token', token)
+      .send(testInstance3)
+      .end(function(err, res) {
+        expect(res.status).to.eql(403);
+        expect(res).to.be.json;
+        User.findOne({username: "phil"}, function(err, data) {
+          if (err) throw err;
+          expect(data.hosting).to.eql(true);
+          expect(data.isCommitted).to.eql(true);
+          done();
+        });
       });
   });
 
@@ -253,6 +292,25 @@ describe('Instances REST API', function() {
       });
   });
 
+  it('should not allow users to PUT /instances/:instance/join if isCommitted is "true"',
+      function(done) {
+      chai.request('localhost:3000')
+        .put('/api/instances/' + testId + '/join')
+        // phil attempts to join the game but fails
+        .set('x-access-token', token)
+        .send()
+        .end(function(err, res) {
+          expect(res.status).to.eql(403);
+          expect(res).to.be.json;
+          User.findOne({username: "phil"}, function(err, data) {
+            if (err) throw err;
+            expect(data.hosting).to.eql(true);
+            expect(data.isCommitted).to.eql(true);
+            done();
+          });
+        });
+  })
+
   it('should respond to a PUT /instances/:instance/join by adding a user\'s ' +
       'id to the participants array on the Instance and change the user\'s ' +
       'field "isCommitted" to true', function(done) {
@@ -270,8 +328,8 @@ describe('Instances REST API', function() {
             if (err) throw err;
             expect(data.hosting).to.eql(false);
             expect(data.isCommitted).to.eql(true);
+            done();
           });
-          done();
         })
   })
 
@@ -288,25 +346,25 @@ describe('Instances REST API', function() {
           expect(res).to.be.json;
           expect(res.body.data.participants).to.have.length(0);
           expect(res.body.data.signedUp).to.eql(0);
-
           User.findOne({username: "zesty"}, function(err, data) {
             if (err) throw err;
             expect(data.hosting).to.eql(false);
-            expect(data.isCommitted).to.eql(true);
+            expect(data.isCommitted).to.eql(false);
+            done();
           });
-          done();
         })
   })
 
   it('should respond to a DELETE /instances/:instance by deleting that instance', function(done) {
     chai.request('localhost:3000')
-      .del('/api/instances/' + testId)
-      .set('x-access-token', token)
+      .del('/api/instances/' + testId2)
+      .send({token: token})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res).to.be.json;
         expect(res.body.success).to.eql(true);
+        // All participants and host should be released
         done();
       });
   });

@@ -65,8 +65,9 @@ jade
 body-parser
 serve-favicon
 data/
+.env
 
-// config.js
+config.js
 
 # Sublime specific #
 ####################
