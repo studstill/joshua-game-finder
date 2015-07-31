@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('authController', ['$scope', '$location', 'auth', function($scope, $location, auth) {
+  app.controller('authController', ['$scope', '$location', '$window', '$timeout', 'auth', function($scope, $location, $window, $timeout, auth) {
 
     if (auth.isSignedIn()) $location.path('/');
     $scope.errors = [];
@@ -34,5 +34,11 @@ module.exports = function(app) {
     };
     $scope.logout = auth.logout;
 
+    $scope.reloadPage = function() {
+      console.log("called authController reloadPage");
+      $timeout(function() {
+        $window.location.reload();
+      }, 200);
+    };
   }]);
 };

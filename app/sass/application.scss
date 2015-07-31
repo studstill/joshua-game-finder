@@ -1,0 +1,38 @@
+@import "reset";
+@import "grid";
+@import "config";
+@import "typography";
+
+main {
+  margin: 3em;
+}
+.siteHeader {
+  background: linear-gradient(to right, lighten($primary, 10%), darken($primary, 20%));
+  padding: 2em;
+}
+.siteHeader--title {
+  font-family: Aclonica, sans-serif;
+  color: $tertiary;
+  margin-bottom: 1em;
+}
+.form input, button {
+  width: 100%;
+  display: block;
+  float:left;
+  border-width: 0.3em;
+  border-color: $secondary;
+  vertical-align: bottom;
+}
+
+.hideMe {
+  color: rgba(0, 0, 0, 0);
+}
+button {
+  display:block;
+  vertical-align: bottom;
+}
+// .clearfix {
+//   display: block;
+//   overflow: auto;
+//   clear:both;
+// }

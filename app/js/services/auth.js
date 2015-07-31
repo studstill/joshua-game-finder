@@ -30,7 +30,7 @@ module.exports = function(app) {
           });
       },
 
-      logout: function() {
+      logout: function($scope) {
         console.log("remove cookies please");
         $cookies.remove('jwt');
       },
