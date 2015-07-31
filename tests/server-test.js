@@ -7,7 +7,7 @@ var server           = require(__dirname + '/../server');
 var chaiHttp         = require('chai-http');
 var mongoose         = require('mongoose');
 var expect           = chai.expect;
-process.env.MONGOLAB_URI = 'mongodb://localhost/game_test2';
+process.env.DATABASE = 'mongodb://localhost/game_test2';
 chai.use(chaiHttp);
 
 var testy = {
