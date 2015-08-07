@@ -31,7 +31,6 @@ module.exports = function(app) {
     $scope.logout = auth.logout;
 
     $scope.reloadPage = function() {
-      console.log("called authController reloadPage");
       $timeout(function() {
         $window.location.reload();
       }, 200);

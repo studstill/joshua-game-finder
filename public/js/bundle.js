@@ -104,14 +104,15 @@
 	        $scope.userId = response.userId;
 	        $scope.isCommitted = response.isCommitted;
 	        $scope.hosting = response.hosting;
+	        $scope.userName = response.userName;
 	      });
 	      $http.get('/api/locations').success(function(response) {
 	        $scope.locations = response.data;
 	      });
 	    };
-
-	    getAll();
-
+	    if (jwt){
+	      getAll();
+	    }
 	    $scope.findId = function(instance) {
 	      var users = [];
 	      instance.participants.forEach(function(participant) {
@@ -121,6 +122,7 @@
 	    };
 
 	    $scope.submitForm = function(instance) {
+	      instance.host = $scope.userName;
 	      $http.post('/api/instances/', instance).success(function(response) {
 	        $http.get('/api/instances').success(function(response) {
 	          $scope.instances = response.data;
@@ -30839,7 +30841,6 @@
 	    $scope.logout = auth.logout;
 
 	    $scope.reloadPage = function() {
-	      console.log("called authController reloadPage");
 	      $timeout(function() {
 	        $window.location.reload();
 	      }, 200);
