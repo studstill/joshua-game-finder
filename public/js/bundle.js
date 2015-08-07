@@ -45,18 +45,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(12);
 	__webpack_require__(11);
 	__webpack_require__(10);
-	__webpack_require__(19);
-	__webpack_require__(13);
-	__webpack_require__(2);
+	__webpack_require__(9);
 	__webpack_require__(20);
+	__webpack_require__(13);
+	__webpack_require__(12);
+	__webpack_require__(21);
 	__webpack_require__(15);
-	__webpack_require__(18);
+	__webpack_require__(19);
 	__webpack_require__(17);
 	__webpack_require__(14);
-	module.exports = __webpack_require__(16);
+	__webpack_require__(16);
+	module.exports = __webpack_require__(18);
 
 
 /***/ },
@@ -65,19 +66,19 @@
 
 	'use strict';
 
+	__webpack_require__(2);
 	__webpack_require__(3);
-	__webpack_require__(4);
-	__webpack_require__(6);
-	__webpack_require__(8);
+	__webpack_require__(5);
+	__webpack_require__(7);
 	var gameApp = angular.module('gameApp', ['ngRoute', 'ngCookies', "angucomplete-alt"]);
 
 	//services
+	__webpack_require__(9)(gameApp);
 	__webpack_require__(10)(gameApp);
 	__webpack_require__(11)(gameApp);
-	__webpack_require__(12)(gameApp);
 
 	//controllers
-	__webpack_require__(2)(gameApp);
+	__webpack_require__(12)(gameApp);
 	__webpack_require__(13)(gameApp);
 
 	//directives
@@ -86,92 +87,11 @@
 	__webpack_require__(16)(gameApp);
 	__webpack_require__(17)(gameApp);
 	__webpack_require__(18)(gameApp);
+	__webpack_require__(19)(gameApp);
 
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function(app) {
-	  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
-	    var jwt = $cookies.get('jwt');
-	    $http.defaults.headers.common['x-access-token'] = jwt;
-	    var getAll = function() {
-	      $http.get('/api/instances').success(function(response) {
-	        $scope.instances = response.data;
-	        $scope.userId = response.userId;
-	        $scope.isCommitted = response.isCommitted;
-	        $scope.hosting = response.hosting;
-	      });
-	      $http.get('/api/locations').success(function(response) {
-	        $scope.locations = response.data;
-	      });
-	    };
-
-	    getAll();
-
-	    $scope.findId = function(instance) {
-	      var users = [];
-	      instance.participants.forEach(function(participant) {
-	        users.push(participant._id);
-	      });
-	      return users;
-	    };
-
-	    $scope.submitForm = function(instance) {
-	      $http.post('/api/instances/', instance).success(function(response) {
-	        $http.get('/api/instances').success(function(response) {
-	          $scope.instances = response.data;
-	        });
-	      });
-	    };
-
-	    $scope.destroy = function(id) {
-	      $http.delete('/api/instances/' + id).success(function(response) {
-	        getAll();
-	      });
-	    }
-
-	    $scope.edit = function(instance) {
-	      instance.editing = true;
-	    };
-
-	    $scope.cancel = function(instance) {
-	      getAll();
-	    };
-
-	    $scope.update = function(instance) {
-	      $http.put('/api/instances/' + id, instance)
-	        .error(function(error) {
-	          $scope.errors.push({
-	            msg: 'could not update instance'
-	          });
-	        });
-	      instance.editing = false;
-	      getAll();
-	    };
-	    $scope.reloadPage = function() {
-	      $window.location.reload();
-	    };
-	    $scope.join = function(id){
-	      $http.put('/api/instances/' + id + "/join");
-	    };
-	    $scope.quit = function(id){
-	      $http.put('/api/instances/' + id + "/quit");
-	    };
-	    $scope.gameOver = function(id){
-	      $http.put('/api/instances/' + id, {
-	        gameOver: true
-	      });
-	    };
-	  }]);
-	};
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -28540,15 +28460,15 @@
 	!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(5);
+	__webpack_require__(4);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -29546,15 +29466,15 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	__webpack_require__(6);
 	module.exports = 'ngCookies';
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -29881,7 +29801,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -29898,10 +29818,10 @@
 	(function (root, factory) {
 	  if (typeof module !== 'undefined' && module.exports) {
 	    // CommonJS
-	    module.exports = factory(__webpack_require__(9));
+	    module.exports = factory(__webpack_require__(8));
 	  } else if (true) {
 	    // AMD
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else {
 	    // Global Variables
 	    factory(root.angular);
@@ -30678,15 +30598,15 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3);
+	__webpack_require__(2);
 	module.exports = angular;
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30740,7 +30660,7 @@
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30759,7 +30679,7 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30803,6 +30723,90 @@
 
 
 /***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('instancesController', ['$scope', '$http', '$cookies', '$route', '$window', function($scope, $http, $cookies, $route, $window) {
+	    var jwt = $cookies.get('jwt');
+	    $http.defaults.headers.common['x-access-token'] = jwt;
+	    var getAll = function() {
+	      $http.get('/api/instances').success(function(response) {
+	        $scope.instances = response.data;
+	        $scope.userId = response.userId;
+	        $scope.isCommitted = response.isCommitted;
+	        $scope.hosting = response.hosting;
+	        $scope.userName = response.userName;
+	      });
+	      $http.get('/api/locations').success(function(response) {
+	        $scope.locations = response.data;
+	      });
+	    };
+	    if (jwt){
+	      getAll();
+	    }
+	    $scope.findId = function(instance) {
+	      var users = [];
+	      instance.participants.forEach(function(participant) {
+	        users.push(participant._id);
+	      });
+	      return users;
+	    };
+
+	    $scope.submitForm = function(instance) {
+	      instance.host = $scope.userName;
+	      $http.post('/api/instances/', instance).success(function(response) {
+	        $http.get('/api/instances').success(function(response) {
+	          $scope.instances = response.data;
+	        });
+	      });
+	    };
+
+	    $scope.destroy = function(id) {
+	      $http.delete('/api/instances/' + id).success(function(response) {
+	        getAll();
+	      });
+	    }
+
+	    $scope.edit = function(instance) {
+	      instance.editing = true;
+	    };
+
+	    $scope.cancel = function(instance) {
+	      getAll();
+	    };
+
+	    $scope.update = function(instance) {
+	      $http.put('/api/instances/' + id, instance)
+	        .error(function(error) {
+	          $scope.errors.push({
+	            msg: 'could not update instance'
+	          });
+	        });
+	      instance.editing = false;
+	      getAll();
+	    };
+	    $scope.reloadPage = function() {
+	      $window.location.reload();
+	    };
+	    $scope.join = function(id){
+	      $http.put('/api/instances/' + id + "/join");
+	    };
+	    $scope.quit = function(id){
+	      $http.put('/api/instances/' + id + "/quit");
+	    };
+	    $scope.gameOver = function(id){
+	      $http.put('/api/instances/' + id, {
+	        gameOver: true
+	      });
+	    };
+	  }]);
+	};
+
+
+/***/ },
 /* 13 */
 /***/ function(module, exports) {
 
@@ -30839,7 +30843,6 @@
 	    $scope.logout = auth.logout;
 
 	    $scope.reloadPage = function() {
-	      console.log("called authController reloadPage");
 	      $timeout(function() {
 	        $window.location.reload();
 	      }, 200);
@@ -30920,6 +30923,22 @@
 	'use strict';
 
 	module.exports = function(app) {
+	  app.directive('welcome', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: './templates/views/welcome.html'
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
 	  app.directive('currentGames', function() {
 	    return {
 	      restrict: 'AC',
@@ -30930,7 +30949,7 @@
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -30975,7 +30994,7 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
