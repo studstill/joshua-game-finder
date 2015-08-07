@@ -68,6 +68,7 @@ data/
 .env
 
 config.js
+localVariables.txt
 
 # Sublime specific #
 ####################
