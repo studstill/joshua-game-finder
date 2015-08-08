@@ -5,7 +5,6 @@ var morgan = require('morgan');
 var config = require('./config')
 var port = process.env.PORT || 3000;
 
-
 mongoose.connect(process.env.DATABASE);
 
 var apiRouter = express.Router();
@@ -21,7 +20,13 @@ require('./routes/auth-routes')(authRouter);
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
 
-app.use(express.static(__dirname + '/public')); //tells localhost to look for an HTML file to serve in the '/folder'
+//tells localhost to look for an HTML file to serve in the '/folder'
+app.use(express.static(__dirname + '/public'));
+
+// Every 15 minutes run autoMarkComplete
+setInterval(function() {
+  require('./mongoUtil').autoMarkComplete();
+}, 900000);
 
 app.listen(port, function() {
   console.log('Server listening on ' + port);
