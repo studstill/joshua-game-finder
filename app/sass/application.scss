@@ -2,32 +2,58 @@
 @import "grid";
 @import "config";
 @import "typography";
+@import "layout";
 
+body {
+  background-color: $background;
+}
 main {
-  margin: 3em;
+  padding: 3em;
+}
+header {
+  width: auto;
+  padding-top: 3em;
 }
 .siteHeader {
-  background: linear-gradient(to right, lighten($primary, 10%), darken($primary, 20%));
-  padding: 2em;
+  background-image: url("../banner3.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 .siteHeader--title {
   font-family: Aclonica, sans-serif;
-  color: $tertiary;
-  margin-bottom: 1em;
 }
-.form input, button {
-  width: 100%;
-  display: block;
-  float:left;
+.siteHeader button {
+  border-color: black;
+  color: black;
+  text-shadow: 0.1em 0.1em 0.05em #222;
+}
+.siteHeader h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: black;
+  text-shadow: 0.02em 0.02em 0.05em #eee;
+}
+.form input,
+button {
+  display: inline-block;
   border-width: 0.3em;
   border-color: $secondary;
+  background-color: lighten($primary, 40%);
   vertical-align: bottom;
+  color: black;
+  text-shadow: 0.02em 0.02em 0.05em #eee;
 }
-
 .hideMe {
   color: rgba(0, 0, 0, 0);
 }
 button {
-  display:block;
+  display: block;
   vertical-align: bottom;
+}
+.button__logout {
+  margin: 0;
 }

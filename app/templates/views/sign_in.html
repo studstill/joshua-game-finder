@@ -1,13 +1,13 @@
 <section data-ng-controller="authController" ng-hide="userId">
-  <div class="container">
-    <form data-ng-submit="authSubmit(user)">
-      <div class="row">
-        <fieldset class="form">
-          <div class="two columns">
+  <form data-ng-submit="authSubmit(user)">
+    <div class="container">
+      <fieldset class="form">
+        <div class="row">
+          <div class="five columns">
             <label for="username">Username</label>
             <input type="text" name="username" data-ng-model="user.username">
           </div>
-          <div class="two columns">
+          <div class="six columns">
             <label for="password">Password</label>
             <input type="password" name="password" data-ng-model="user.password">
           </div>
@@ -15,8 +15,8 @@
             <label for="sign-in" class="hideMe">sign-in</label>
             <button type="submit" ng-click="reloadPage()" name="sign-in">Sign in</button>
           </div>
-        </fieldset>
-      </div>
-    </form>
-  </div>
+        </div>
+      </fieldset>
+    </div>
+  </form>
 </section>
