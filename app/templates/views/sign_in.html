@@ -1,13 +1,16 @@
 <section data-ng-controller="authController" ng-hide="userId">
   <form data-ng-submit="authSubmit(user)">
+    <h1 class="siteHeader--title">Looking For Game</h1>
     <div class="container">
       <fieldset class="form">
         <div class="row">
-          <div class="five columns">
+          <div class="three columns">
             <label for="username">Username</label>
             <input type="text" name="username" data-ng-model="user.username">
           </div>
-          <div class="six columns">
+        </div>
+        <div class="row">
+          <div class="three columns">
             <label for="password">Password</label>
             <input type="password" name="password" data-ng-model="user.password">
           </div>

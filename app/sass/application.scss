@@ -5,6 +5,8 @@
 @import "layout";
 
 body {
+  padding-left: 4em;
+  padding-right: 4em;
   background-color: $background;
 }
 main {
@@ -13,6 +15,7 @@ main {
 header {
   width: auto;
   padding-top: 3em;
+  padding-left: 10%;
 }
 .siteHeader {
   background-image: url("../banner3.jpg");
@@ -26,7 +29,6 @@ header {
 .siteHeader button {
   border-color: black;
   color: black;
-  text-shadow: 0.1em 0.1em 0.05em #222;
 }
 .siteHeader h1,
 h2,
@@ -56,4 +58,18 @@ button {
 }
 .button__logout {
   margin: 0;
+}
+.weclome {
+  display: inline-block;
+}
+ul {
+  margin-left: 10%;
+}
+@media screen and (min-width: 400px) {
+  header { padding-left: 10%;}
+  body { padding: 0;}
+}
+.even {
+    background-color: lighten($primary, 15%);
+    width: 40%;
 }

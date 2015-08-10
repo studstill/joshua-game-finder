@@ -76,7 +76,7 @@ ul {
   position: relative;
   width: 100%;
   max-width: 960px;
-  margin: 2%;
+  margin: 0;
   padding: 0;
   box-sizing: border-box; }
 
@@ -98,7 +98,7 @@ ul {
     width: 80%; }
   .column,
   .columns {
-    margin-left: 4%; }
+    margin-left: 2%; }
   .column:first-child,
   .columns:first-child {
     margin-left: 2%; }
@@ -248,35 +248,40 @@ h6 {
   line-height: 1.6;
   letter-spacing: 0; }
 
+ul {
+  font-size: 3.0rem; }
+
 /* Larger than phablet */
-@media (min-width: 550px) {
+@media screen and (min-width: 500px) {
   h1 {
-    font-size: 5.0rem; }
+    font-size: 3.5rem; }
   h2 {
-    font-size: 4.2rem; }
-  h3 {
-    font-size: 3.6rem; }
-  h4 {
     font-size: 3.0rem; }
+  h3 {
+    font-size: 2.3rem; }
+  h4 {
+    font-size: 1.7rem; }
   h5 {
-    font-size: 2.4rem; }
+    font-size: 1.4rem; }
   h6 {
-    font-size: 1.5rem; } }
+    font-size: 1.1rem; } }
 
 /* Larger than mobile */
-@media (min-width: 400px) {
+@media screen and (min-width: 350px) {
   h1 {
-    font-size: 3.6rem; }
+    font-size: 2.9rem; }
   h2 {
-    font-size: 3.0rem; }
+    font-size: 2.3rem; }
   h3 {
-    font-size: 2.4rem; }
+    font-size: 1.7rem; }
   h4 {
-    font-size: 1.8rem; }
+    font-size: 1.4rem; }
   h5 {
-    font-size: 1.5rem; }
+    font-size: 1.1rem; }
   h6 {
-    font-size: 1.2rem; } }
+    font-size: 1.0rem; }
+  ul {
+    font-size: 1.7rem; } }
 
 p {
   margin-top: 0; }
@@ -560,6 +565,8 @@ li, label {
   margin-right: 15em; }
 
 body {
+  padding-left: 4em;
+  padding-right: 4em;
   background-color: #fbfbfb; }
 
 main {
@@ -567,7 +574,8 @@ main {
 
 header {
   width: auto;
-  padding-top: 3em; }
+  padding-top: 3em;
+  padding-left: 10%; }
 
 .siteHeader {
   background-image: url("../banner3.jpg");
@@ -580,8 +588,7 @@ header {
 
 .siteHeader button {
   border-color: black;
-  color: black;
-  text-shadow: 0.1em 0.1em 0.05em #222; }
+  color: black; }
 
 .siteHeader h1,
 h2,
@@ -611,3 +618,19 @@ button {
 
 .button__logout {
   margin: 0; }
+
+.weclome {
+  display: inline-block; }
+
+ul {
+  margin-left: 10%; }
+
+@media screen and (min-width: 400px) {
+  header {
+    padding-left: 10%; }
+  body {
+    padding: 0; } }
+
+.even {
+  background-color: #f6c363;
+  width: 40%; }
