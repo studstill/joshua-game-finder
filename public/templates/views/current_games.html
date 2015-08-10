@@ -10,8 +10,8 @@
   </select>
   <ul>
     <!-- existing games -->
-    <li data-ng-repeat="instance in instances.slice().reverse() | filter:query | orderBy: queryBy">
-      <h3>{{ instance.host }}'s {{ instance.game }} @ {{ instance.startTime }} at {{ instance.location }}</h3>
+    <li data-ng-repeat="instance in instances.slice().reverse() | filter:query | orderBy: queryBy"  data-ng-class="{even: $even, odd: $odd}">
+      <h2>{{ instance.host }}'s {{ instance.game }} @ {{ instance.startTime }} at {{ instance.location }}</h2>
       <ul>
         <li>
           Signed Up: {{ instance.signedUp }}
@@ -22,9 +22,9 @@
         <li data-ng-repeat="participant in instance.participants">
           Users Signed Up: {{ participant.username }}
         </li>
-        <li>
+        <!-- <li>
           Host name: {{ instance.host }}
-        </li>
+        </li> -->
         <li>
           Game: {{ instance.game }}
         </li>
