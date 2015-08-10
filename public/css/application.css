@@ -264,7 +264,9 @@ ul {
   h5 {
     font-size: 1.4rem; }
   h6 {
-    font-size: 1.1rem; } }
+    font-size: 1.1rem; }
+  ul {
+    font-size: 2.3rem; } }
 
 /* Larger than mobile */
 @media screen and (min-width: 350px) {
@@ -281,7 +283,7 @@ ul {
   h6 {
     font-size: 1.0rem; }
   ul {
-    font-size: 1.7rem; } }
+    font-size: 1.4rem; } }
 
 p {
   margin-top: 0; }
@@ -614,7 +616,8 @@ button {
 
 button {
   display: block;
-  vertical-align: bottom; }
+  vertical-align: bottom;
+  font-family: Rhodium Libre, sans-serif; }
 
 .button__logout {
   margin: 0; }
@@ -625,12 +628,40 @@ button {
 ul {
   margin-left: 10%; }
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 350px) {
   header {
     padding-left: 10%; }
   body {
-    padding: 0; } }
+    padding: 0;
+    margin: 2%; }
+  main {
+    padding: 2%;
+    margin: 2%; }
+  ul {
+    padding: 0;
+    margin: 0;
+    width: auto; }
+  li {
+    padding: 0;
+    margin: 0;
+    width: auto; } }
 
 .even {
   background-color: #f6c363;
-  width: 40%; }
+  width: auto; }
+
+.body--text {
+  font-family: Rhodium Libre, sans-serif; }
+
+.about {
+  font-family: Rhodium Libre;
+  display: inline;
+  padding: 0;
+  margin: 0; }
+
+a {
+  text-decoration: none; }
+
+.main--about {
+  margin-left: 15%;
+  margin-right: 15%; }
