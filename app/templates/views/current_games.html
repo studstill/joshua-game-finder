@@ -40,8 +40,8 @@
         <li>
           Game Over: {{instance.gameOver}}
         </li>
-        <form ng-show="userId === instance.creator">
-          <div class="container">
+        <div class="container">
+          <form ng-show="userId === instance.creator">
             <div class="row">
               <!-- <div class="three columns">
                 <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button>
@@ -53,20 +53,20 @@
                 <button type="submit" class="game-over" ng-show="!instance.gameOver" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
               </div>
             </div>
-        </form>
-        <!-- ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false" -->
-        <form>
-          <div class="row">
-            <div class="three columns">
-            <!-- ng-show="isCommitted===false && instance.signedUp < instance.playersNeeded"  -->
-              <button class="join-game" type="submit" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+          </form>
+          <!-- ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false" -->
+          <form>
+            <div class="row">
+              <div class="three columns">
+              <!-- ng-show="isCommitted===false && instance.signedUp < instance.playersNeeded"  -->
+                <button class="join-game" type="submit" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+              </div>
+              <div class="three columns">
+                <!-- ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1"  -->
+                <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
+              </div>
             </div>
-            <div class="three columns">
-              <!-- ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1"  -->
-              <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
-            </div>
-        </form>
-        </div>
+          </form>
         </div>
       </ul>
     </li>
