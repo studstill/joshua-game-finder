@@ -48,16 +48,16 @@
 	__webpack_require__(11);
 	__webpack_require__(10);
 	__webpack_require__(9);
+	__webpack_require__(20);
+	__webpack_require__(13);
+	__webpack_require__(12);
+	__webpack_require__(21);
 	__webpack_require__(15);
 	__webpack_require__(19);
 	__webpack_require__(17);
 	__webpack_require__(14);
 	__webpack_require__(16);
-	__webpack_require__(18);
-	__webpack_require__(20);
-	__webpack_require__(13);
-	__webpack_require__(12);
-	module.exports = __webpack_require__(21);
+	module.exports = __webpack_require__(18);
 
 
 /***/ },
@@ -30741,6 +30741,8 @@
 	        $scope.isCommitted = response.isCommitted;
 	        $scope.hosting = response.hosting;
 	        $scope.userName = response.userName;
+	        console.log('$scope.instances is below:');
+	        console.log($scope.instances);
 	      });
 	      $http.get('/api/locations').success(function(response) {
 	        $scope.locations = response.data;
