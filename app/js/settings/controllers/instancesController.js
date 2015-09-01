@@ -6,11 +6,13 @@ module.exports = function(app) {
     $http.defaults.headers.common['x-access-token'] = jwt;
     var getAll = function() {
       $http.get('/api/instances').success(function(response) {
+        // In the response, we are sending all of the data for the user that is
+        // currently logged in.
         $scope.instances = response.data;
-        $scope.userId = '';
-        $scope.isCommitted = '';
-        $scope.hosting = '';
-        $scope.userName = '';
+        $scope.userId = response.userId;
+        $scope.isCommitted = response.isCommitted;
+        $scope.hosting = response.hosting;
+        $scope.userName = response.userName;
       });
       $http.get('/api/locations').success(function(response) {
         $scope.locations = response.data;
