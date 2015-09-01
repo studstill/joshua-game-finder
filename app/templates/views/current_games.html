@@ -54,7 +54,8 @@
               </div>
             </div>
         </form>
-        <form ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false">
+        <!-- ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false" -->
+        <form>
           <div class="row">
             <div class="three columns">
               <button class="join-game" type="submit" ng-show="isCommitted===false && instance.signedUp < instance.playersNeeded" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
