@@ -54,10 +54,10 @@
               </div>
             </div>
           </form>
-          <form ng-show="userId !== instance.creator && !hosting && !instance.gameOver">
+          <form ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false">
             <div class="row">
               <div class="three columns">
-                <button class="join-game" type="submit" ng-show="isCommitted===false && instance.signedUp < instance.playersNeeded" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+                <button class="join-game" type="submit" ng-show="isCommitted===false && instance.participants.length < instance.playersNeeded" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
               </div>
               <div class="three columns">
                 <button class="leave-game" type="submit" ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
