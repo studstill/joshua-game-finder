@@ -13,7 +13,9 @@ module.exports = {
           error: err
         });
       } else {
+        console.log(req.decoded._id);
         User.findOne({_id: req.decoded._id}, function(err, data) {
+          console.log(data);
           if (err) {
             res.status(500).json({success: false, msg: 'Error finding user', error: err});
           } else {
