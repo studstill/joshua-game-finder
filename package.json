@@ -1,6 +1,6 @@
 {
   "name": "looking-for-game",
-  "version": "0.8.9",
+  "version": "0.8.91",
   "description": "Find, host, and play table top games",
   "main": "server.js",
   "scripts": {
