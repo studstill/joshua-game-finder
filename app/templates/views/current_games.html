@@ -60,8 +60,7 @@
                 <button class="join-game" type="submit" ng-show="isCommitted===false && instance.participants.length < instance.playersNeeded" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
               </div>
               <div class="three columns">
-              <!-- ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1"  -->
-                <button class="leave-game" type="submit" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
+                <button class="leave-game" type="submit" ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
               </div>
             </div>
           </form>
