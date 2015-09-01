@@ -22,12 +22,19 @@ module.exports = {
         if (req.decoded._id != instance.creator) {
           res.status(403).json({success: false, msg: 'User does not have access to this file'});
         } else {
+          // Release the participants from the instance
           instance.participants.forEach(function(e) {
             User.findOneAndUpdate({_id: e}, {isCommitted:false}, function(err, numAffected) {
               if (err) {
                 return res.status(500).json({success: false, msg: 'Error updating instance', error: err});
               }
             });
+          });
+          // Release the host from the instance
+          User.findOneAndUpdate({_id: instance.creator}, {hosting: false, isCommitted: false}, function(err, numAffected) {
+            if (err) {
+              return res.status(500).json({success: false, msg: 'Error updating instance', error: err});
+            }
           });
           Instance.remove({_id: req.params.instance}, function(err, data) {
             if (err) {
