@@ -7,10 +7,10 @@ module.exports = function(app) {
     var getAll = function() {
       $http.get('/api/instances').success(function(response) {
         $scope.instances = response.data;
-        $scope.userId = response.userId;
-        $scope.isCommitted = response.isCommitted;
-        $scope.hosting = response.hosting;
-        $scope.userName = response.userName;
+        $scope.userId = '';
+        $scope.isCommitted = '';
+        $scope.hosting = '';
+        $scope.userName = '';
       });
       $http.get('/api/locations').success(function(response) {
         $scope.locations = response.data;
