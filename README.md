@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/studstill/looking-for-game.png?label=ready&title=Ready)](https://waffle.io/studstill/looking-for-game)
 #"Would you like to play a game?"
 ##Purpose of this app:
 
