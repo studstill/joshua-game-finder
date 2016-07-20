@@ -12,8 +12,8 @@ var locationSchema = Schema({
   email: String,
   openTime: String,
   closeTime: String,
-  latitude: Number,
-  longitude: Number,
+  lat: Number,
+  lon: Number,
   rating: Number,
   maxGames: Number,
   over21: Boolean
