@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-import { isEMail } from 'validator';
 
-var userSchema = Schema({
+
+var userSchema = new mongoose.Schema({
   username: {
     type: { String, min: 6, max: 20 },
     unique: true,
@@ -15,15 +14,16 @@ var userSchema = Schema({
     required: 'Username is required, only lowercase letters and numbers allowed'
   },
   password: {
-    type: { String, min: 8, max: 24 }
+    type: { String, min: 8, max: 24 },
     required: true,
     match: /\w+$/,
-    required: 'Password is required. Allowed characters are A-Z, a-z, and 0-9.'
+    required: '8 to 24 character password is required. Allowed characters are A-Z, a-z, and 0-9.'
   },
   email: {
     type: String,
     required: true,
-    validate: [ isEmail, 'please provide a valid email address']
+    match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+    required: 'Email addres is not valid, please try again.'
   },
   firstName: String,
   lastName: String,

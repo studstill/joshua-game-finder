@@ -33,7 +33,7 @@ locationRouter.put('/locations/:id', bodyParser, (req, res) => {
 });
 
 // some locations may go away, or they may be private locations
-locationsRouter.delete('/locations/:id', (req, res) => {
+locationRouter.delete('/locations/:id', (req, res) => {
   Locations.remove({ _id: req.params.id }, (err) => {
     if (err) return errorHandler(err, res);
     res.status(200).json({ msg: 'The location has been removed.' });

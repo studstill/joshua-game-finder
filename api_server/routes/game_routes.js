@@ -1,5 +1,5 @@
 const Router = require('express').Router;
-const Games = require(__dirname + '/../models/game');
+const Games = require(__dirname + './../models/game');
 const bodyParser = require('body-parser').json();
 const errorHandler = require('./../lib/db_error_handler');
 const http = require('http');
@@ -8,28 +8,25 @@ const gameRouter = module.exports = Router();
 
 // set up route for user generated game data
 gameRouter.post('/games', bodyParser, (req, res) => {
-  var newGame = new Game(req.body);
+  var newGame = new Games(req.body);
   newGame.save((err, data) => {
     if (err) return errorHandler(err, res);
     res.status(200).json(data);
   });
 });
 
-gameRouter.get('/games/:id', (req, res) => {
-  Games.findOne({ _id: req.params.id }, (err, game) => {
-    // needs logic for attaching game to location
-    game.save(function(err, doc) {
-      if (err) return errorHandler(err, res);
-      res.status(200).json(data);
-    });
+gameRouter.get('/games', (req, res) => {
+  Games.find(null, (err, data) => {
+    if (err) return errorHandler(err, res);
+    res.status(200).json(data);
   });
 });
 
 // for updating game info
-gameRouter.put('/trails/:id', (req, res) => {
+gameRouter.put('/games/:id', bodyParser, (req, res) => {
   var gameData = req.body;
   delete gameData._id; // recommended in the Mongoose docs to prevent _id collisions
-  Games.remove({ _id: reg.params.id }, gameData, (err) => {
+  Games.update({ _id: req.params.id }, gameData, (err) => {
     if (err) return errorHandler(err, res);
     res.status(200).json({ msg: 'Game information has been updated.' });
   });

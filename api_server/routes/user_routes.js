@@ -1,4 +1,4 @@
-const express = require('express').Router;
+const Router = require('express').Router;
 const User = require(__dirname + '/../models/user');
 const bodyParser = require('body-parser').json();
 const authHttp = require(__dirname + '/../lib/auth_http');
@@ -23,7 +23,7 @@ authenticationRouter.post('/signup', bodyParser, (req, res) => {
       return res.status(400).json({ msg: 'Invalid email' })
     }
   });
-  User.find({ username: req.body.name }, (err, docs) => {
+  User.find({ username: req.body.username }, (err, docs) => {
     if (err) return errorHandler(err);
     if (docs.length > 0) {
       return res.status(400).json({ msg: 'That username is taken' });

@@ -32,7 +32,7 @@ instanceRouter.put('/instances/:id', bodyParser, (req, res) => {
 });
 
 // Instances should eventually go away
-instancesRouter.delete('/locations/:id', (req, res) => {
+instanceRouter.delete('/locations/:id', (req, res) => {
   Instances.remove({ _id: req.params.id }, (err) => {
     if (err) return errorHandler(err, res);
     res.status(200).json({ msg: 'The instance has been removed.' });
