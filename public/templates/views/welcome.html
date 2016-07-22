@@ -1,0 +1,22 @@
+<div ng-show="userId">
+  <div class="container">
+    <div class="row">
+      <div class="five columns">
+      <h1 class="siteHeader--title">Looking For Game</h1>
+      </div>
+      <div class="offset-by-three columns three columns>">
+      <section data-ng-controller="instancesController">
+        <h2>Welcome Back {{ userName }}!</h2>
+      </section>
+    </div>
+    <div class="offset-by-eight columns three columns">
+      <section data-ng-controller="authController">
+        <form data-ng-submit="logout()">
+          <button type="submit" ng-click="reloadPage()">Log Out</button>
+          </span>
+        </form>
+      </section>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div data-ng-controller="instancesController" ng-model="query" ng-show="userId">
+  <h2 class="body--text"> Current Games </h2>
+  <h4>Arrange Games By: </h4>
+  <select ng-model="queryBy">
+    <option value="host">Host</option>
+    <option value="game">Game</option>
+    <option value="location">Location</option>
+    <option value="gameOver">Game Status</option>
+    <option value="date">Recently Added</option>
+  </select>
+  <ul class="body--text">
+    <!-- existing games -->
+    <li data-ng-repeat="instance in instances.slice().reverse() | filter:query | orderBy: queryBy" data-ng-class="{even: $even, odd: $odd}">
+      <h2>{{ instance.host }}'s {{ instance.game }} <br/>@ {{ instance.startTime }} at {{ instance.location }}</h2>
+      <ul>
+        <li>
+          Signed Up: {{ instance.signedUp }}
+        </li>
+        <li>
+          Players Needed: {{ instance.playersNeeded }}
+        </li>
+        <li data-ng-repeat="participant in instance.participants">
+          Users Signed Up: {{ participant.username }}
+        </li>
+        <!-- <li>
+          Host name: {{ instance.host }}
+        </li> -->
+        <li>
+          Game: {{ instance.game }}
+        </li>
+        <li>
+          Where: {{ instance.location }}
+        </li>
+        <li>
+          Time: {{instance.startTime}}
+        </li>
+        <li>
+          Duration: {{instance.playTime}}
+        </li>
+        <li>
+          Game Over: {{instance.gameOver}}
+        </li>
+        <div class="container">
+          <form ng-show="userId === instance.creator">
+            <div class="row">
+              <!-- <div class="three columns">
+                <button class="btn-caution" type="submit" data-ng-click="edit(instance); reloadPage()">Edit</button>
+              </div> -->
+              <div class="four columns">
+                <button class="btn-alert" type="submit" data-ng-click="destroy(instance._id); reloadPage()">Remove</button>
+              </div>
+              <div class="three columns">
+                <button type="submit" class="game-over" ng-show="!instance.gameOver" data-ng-click="gameOver(instance._id); reloadPage()">Game Complete</button>
+              </div>
+            </div>
+          </form>
+          <form ng-show="userId !== instance.creator && hosting === false && instance.gameOver === false">
+            <div class="row">
+              <div class="three columns">
+                <button class="join-game" type="submit" ng-show="isCommitted===false && instance.participants.length < instance.playersNeeded" data-ng-click="join(instance._id); reloadPage()">Join This Game</button>
+              </div>
+              <div class="three columns">
+                <button class="leave-game" type="submit" ng-show="isCommitted===true && findId(instance).indexOf(userId)!=-1" data-ng-click="quit(instance._id); reloadPage()">Leave this game</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,96 @@
+@import "reset";
+@import "grid";
+@import "config";
+@import "typography";
+@import "layout";
+
+body {
+  padding-left: 4em;
+  padding-right: 4em;
+  background-color: $background;
+}
+main {
+  padding: 3em;
+}
+header {
+  width: auto;
+  padding-top: 3em;
+  padding-left: 10%;
+}
+.siteHeader {
+  background-image: url("../banner3.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.siteHeader--title {
+  font-family: Aclonica, sans-serif;
+}
+.siteHeader button {
+  border-color: black;
+  color: black;
+}
+.siteHeader h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: black;
+  text-shadow: 0.02em 0.02em 0.05em #eee;
+}
+.form input,
+button {
+  display: inline-block;
+  border-width: 0.3em;
+  border-color: $secondary;
+  background-color: lighten($primary, 40%);
+  vertical-align: bottom;
+  color: black;
+  text-shadow: 0.02em 0.02em 0.05em #eee;
+}
+.hideMe {
+  color: rgba(0, 0, 0, 0);
+}
+button {
+  display: block;
+  vertical-align: bottom;
+  font-family: Rhodium Libre, sans-serif;
+}
+.button__logout {
+  margin: 0;
+}
+.weclome {
+  display: inline-block;
+}
+ul {
+  margin-left: 10%;
+}
+@media screen and (min-width: 350px) {
+  header { padding-left: 10%;}
+  body { padding: 0; margin: 2%;}
+  main { padding: 2%; margin: 2%;}
+  ul { padding: 0; margin: 0; width: auto;}
+  li { padding: 0; margin: 0; width: auto;}
+}
+.even {
+    background-color: lighten($primary, 15%);
+    width: auto;
+}
+.body--text {
+  font-family: Rhodium Libre, sans-serif;
+
+}
+.about {
+  font-family: Rhodium Libre;
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+.main--about {
+  margin-left: 15%;
+  margin-right: 15%;
+}

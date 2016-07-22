@@ -1,0 +1,46 @@
+<section data-ng-controller="authController" ng-hide="userId">
+  <div class="container">
+    <form data-ng-submit="authSubmit(user)">
+      <fieldset class="form">
+        <div class="row">
+          <div class="three columns">
+            <label for="username">Username</label>
+            <input type="text" name="username" data-ng-model="user.username">
+          </div>
+          <div class="three columns">
+            <label for="password">Password</label>
+            <input type="password" name="password" data-ng-model="user.password">
+          </div>
+          <div class="three columns">
+            <label for="email">eMail</label>
+            <input type="text" name="email" data-ng-model="user.email">
+          </div>
+        </div>
+        <div class="row">
+          <div class="three columns">
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" data-ng-model="user.firstName">
+          </div>
+          <div class="three columns">
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" data-ng-model="user.lastName">
+          </div>
+          <div class="three columns">
+            <label for="city">City</label>
+            <input type="text" name="city" data-ng-model="user.city">
+          </div>
+          <div class="two columns">
+            <label for="state">State</label>
+            <input type="text" name="state" data-ng-model="user.state">
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-by-nine columns two columns">
+            <label for="sign-up" class="hideMe">sign-up</label>
+            <button type="submit" ng-click="reloadPage()">Sign up</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
