@@ -61,14 +61,14 @@ describe('Database can add/view/remove games', () => {
     request('localhost:' + port)
     .get('/api/games')
     .end((err, res) => {
+      var body = res.body[0];
       request('localhost:' + port)
       .put('/api/games/' + res.body[0]._id)
       .send({ 'name': 'CHANGED' })
       .end((err, res) => {
-        console.log(res);
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
-        expect(res.body[0].name).to.eql('CHANGED');
+        expect(res.body.name).to.eql('CHANGED');
         done();
       })
     })

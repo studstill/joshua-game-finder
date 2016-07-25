@@ -28,7 +28,7 @@ gameRouter.put('/games/:id', bodyParser, (req, res) => {
   delete gameData._id; // recommended in the Mongoose docs to prevent _id collisions
   Games.update({ _id: req.params.id }, gameData, (err) => {
     if (err) return errorHandler(err, res);
-    res.status(200).json({ msg: 'Game information has been updated.' });
+    res.status(200).json(gameData);
   });
 });
 
