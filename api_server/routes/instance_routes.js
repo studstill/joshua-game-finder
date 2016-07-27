@@ -25,9 +25,9 @@ instanceRouter.get('/instances', (req, res) => {
 instanceRouter.put('/instances/:id', bodyParser, (req, res) => {
   var instanceData = req.body;
   delete instanceData._id;
-  Instances.update({ _id: req.params.id }, locationData, (err) => {
+  Instances.update({ _id: req.params.id }, instanceData, (err) => {
     if (err) return errorHandler(err, res);
-    res.status(200).json('Instance info updated');
+    res.status(200).json(instanceData);
   });
 });
 

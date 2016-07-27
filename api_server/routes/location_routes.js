@@ -8,7 +8,7 @@ const locationRouter = module.exports = Router();
 
 // set up route for Admins to add new game locations
 locationRouter.post('/locations', bodyParser, (req, res) => {
-  var newLocation = new Location(req.body);
+  var newLocation = new Locations(req.body);
   newLocation.save((err, data) => {
     if (err) return errorHandler(err, res);
     res.status(200).json(data);
@@ -28,7 +28,7 @@ locationRouter.put('/locations/:id', bodyParser, (req, res) => {
   delete locationData._id;
   Locations.update({ _id: req.params.id }, locationData, (err) => {
     if (err) return errorHandler(err, res);
-    res.status(200).json('Location info updated.');
+    res.status(200).json(locationData);
   });
 });
 

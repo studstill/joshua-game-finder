@@ -7,7 +7,7 @@ var locationSchema = Schema({
   city: String,
   state: String,
   zipCode: Number,
-  phoneNumber: Number,
+  phoneNumber: String,
   url: String,
   email: String,
   openTime: String,

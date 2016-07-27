@@ -32,7 +32,7 @@ authenticationRouter.post('/signup', bodyParser, (req, res) => {
   var newUser = new User(req.body);
   req.body.email = null;
   var password = req.body.password;
-  newUser.generateHash(password);
+  newUser.createHash(password);
   req.body.password = null;
   password = null;
 
