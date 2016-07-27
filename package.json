@@ -6,7 +6,7 @@
   "scripts": {
     "create-db-dir": "node api_server/lib/make_directory.js",
     "install": "npm run create-db-dir",
-    "test": "gulp test",
+    "test": "mocha test/**/*test.js",
     "start": "node server.js"
   },
   "repository": {
@@ -44,8 +44,8 @@
     "jsonwebtoken": "^6.1.1",
     "mongodb": "~2.1.8",
     "mongoose": "^4.4.14",
-    "morgan": "^1.6.1",
-    "validator": "^5.4.0"
+    "mongoose-validator": "^1.2.5",
+    "morgan": "^1.6.1"
   },
   "devDependencies": {
     "chai": "^3.2.0",

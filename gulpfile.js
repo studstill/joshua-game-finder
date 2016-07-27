@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 var sass = require('gulp-sass');
 
 gulp.task('sass', function() {
